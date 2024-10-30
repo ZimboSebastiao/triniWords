@@ -1,0 +1,4 @@
+azul = #3BB3BD
+preto = #30333C
+laranja = #FCBE32
+cinza = #EDEFF0
