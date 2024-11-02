@@ -9,7 +9,7 @@ export default function Home() {
       <View style={styles.saudacao}>
         <Text style={styles.title}>Hi There 👋</Text>
         <Text style={styles.subtitle}>
-          What would you like to train today? Search beloww.
+          What would you like to train today? Search below.
         </Text>
       </View>
       <View style={styles.search}>
