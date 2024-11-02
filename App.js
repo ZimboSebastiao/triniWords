@@ -24,70 +24,64 @@ export default function App() {
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={{
+          headerShown: false,
           tabBarStyle: {
             backgroundColor: "#EDEFF0",
             borderTopColor: "#EDEFF0",
-            height: "7%",
+            height: 55,
           },
+          tabBarActiveTintColor: "#3BB3BD",
+          tabBarInactiveTintColor: "#b1b4b5",
+          tabBarShowLabel: false,
         }}
       >
         <Tab.Screen
           name="Home"
           component={Home}
           options={{
-            headerShown: false,
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="home" color={color} size={size} />
+              <MaterialCommunityIcons name="home" color={color} size={35} />
             ),
-            tabBarShowLabel: false,
-            tabBarActiveTintColor: "red",
-            tabBarInactiveTintColor: "#ffff",
-            // tabBarStyle: { display: "none" },
           }}
         />
         <Tab.Screen
           name="Search"
           component={SearchScreen}
           options={{
-            headerShown: false,
-            tabBarIcon: () => <Search color="#3BB3BD" />,
-            tabBarShowLabel: false,
-            // tabBarActiveColor: "#ff80c3",
-            tabBarInactiveTintColor: "#ffff",
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="magnify" color={color} size={35} />
+            ),
           }}
         />
         <Tab.Screen
           name="Dicionary"
           component={DicionaryScreen}
           options={{
-            headerShown: false,
-            tabBarIcon: () => <BookText color="#3BB3BD" />,
-            tabBarShowLabel: false,
-            tabBarActiveTintColor: "#ff80c3",
-            tabBarInactiveTintColor: "#ffff",
-            // tabBarStyle: { display: "none" },
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="book-open-page-variant"
+                color={color}
+                size={size}
+              />
+            ),
           }}
         />
         <Tab.Screen
           name="Chatbot"
           component={Chatbot}
           options={{
-            headerShown: false,
-            tabBarIcon: () => <MessageCircle color="#3BB3BD" />,
-            tabBarShowLabel: false,
-            tabBarActiveTintColor: "#ff80c3",
-            tabBarInactiveTintColor: "#ffff",
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="chat" color={color} size={35} />
+            ),
           }}
         />
         <Tab.Screen
           name="Settings"
           component={SettingsScreen}
           options={{
-            headerShown: false,
-            tabBarIcon: () => <Settings color="#3BB3BD" />,
-            tabBarShowLabel: false,
-            tabBarActiveTintColor: "#ff80c3",
-            tabBarInactiveTintColor: "#ffff",
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="cog" color={color} size={35} />
+            ),
           }}
         />
       </Tab.Navigator>
