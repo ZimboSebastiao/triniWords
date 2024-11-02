@@ -5,8 +5,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Search, BookText, Settings, MessageCircle } from "lucide-react-native";
 
 import Home from "./src/screens/Home";
-import Settings from "./src/screens/Settings";
-import Search from "./src/screens/Search";
+import SettingsScreen from "./src/screens/SettingsScreen";
+import SearchScreen from "./src/screens/SearchScreen";
 import Chatbot from "./src/screens/Chatbot";
 
 const Tab = createBottomTabNavigator();
@@ -14,11 +14,61 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Search" component={Search} />
-        <Tab.Screen name="Chatbot" component={Chatbot} />
-        <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          tabBarStyle: {
+            backgroundColor: "#EDEFF0",
+            borderTopColor: "#EDEFF0",
+            height: "7%",
+          },
+        }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: false,
+            tabBarIcon: () => <BookText color="#3BB3BD" />,
+            tabBarShowLabel: false,
+            tabBarActiveTintColor: "#ff80c3",
+            tabBarInactiveTintColor: "#ffff",
+            // tabBarStyle: { display: "none" },
+          }}
+        />
+        <Tab.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: () => <Search color="#3BB3BD" />,
+            tabBarShowLabel: false,
+            // tabBarActiveColor: "#ff80c3",
+            tabBarInactiveTintColor: "#ffff",
+          }}
+        />
+        <Tab.Screen
+          name="Chatbot"
+          component={Chatbot}
+          options={{
+            headerShown: false,
+            tabBarIcon: () => <MessageCircle color="#3BB3BD" />,
+            tabBarShowLabel: false,
+            tabBarActiveTintColor: "#ff80c3",
+            tabBarInactiveTintColor: "#ffff",
+          }}
+        />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: () => <Settings color="#3BB3BD" />,
+            tabBarShowLabel: false,
+            tabBarActiveTintColor: "#ff80c3",
+            tabBarInactiveTintColor: "#ffff",
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
@@ -27,7 +77,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#EDEFF0",
     alignItems: "center",
     justifyContent: "center",
   },
