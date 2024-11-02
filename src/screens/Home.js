@@ -8,9 +8,18 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Searchbar, Card, ProgressBar, MD3Colors } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = React.useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigation = useNavigation();
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigation.navigate("SearchScreen", { word: searchQuery.trim() });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.saudacao}>
@@ -30,6 +39,7 @@ export default function Home() {
           inputStyle={styles.input}
           onChangeText={setSearchQuery}
           value={searchQuery}
+          onSubmitEditing={handleSearch}
         />
       </View>
       <View style={styles.studying}>

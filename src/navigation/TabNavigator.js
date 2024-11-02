@@ -35,7 +35,7 @@ export default function TabNavigator() {
           ),
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Search"
         component={SearchScreen}
         options={{
@@ -43,7 +43,7 @@ export default function TabNavigator() {
             <MaterialCommunityIcons name="magnify" color={color} size={35} />
           ),
         }}
-      /> */}
+      />
       <Tab.Screen
         name="Dicionary"
         component={DicionaryScreen}
