@@ -55,10 +55,15 @@ export default function SearchScreen({ route }) {
               style={{ padding: 30 }}
             />
           </View>
-          <View>
+          <View style={styles.viewPhonetic}>
             <Text style={styles.phonetic}>{definition.phonetic || ""}</Text>
             <Pressable>
-              <MaterialCommunityIcons name="home" color="#3BB3BD" size={35} />
+              <MaterialCommunityIcons
+                name="volume-high"
+                color="#3BB3BD"
+                size={30}
+                style={{ padding: 5 }}
+              />
             </Pressable>
           </View>
           <Text style={styles.origin}>{definition.origin || ""}</Text>
@@ -130,6 +135,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   viewTitle: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  viewPhonetic: {
     flexDirection: "row",
     alignItems: "center",
   },
