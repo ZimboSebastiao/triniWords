@@ -1,4 +1,3 @@
-// src/screens/SearchScreen.js
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -10,7 +9,8 @@ import {
 import { fetchWordDefinition } from "../apis/dictionaryApi";
 
 export default function SearchScreen({ route }) {
-  const { word } = route.params;
+  // const { word } = route.params;
+  const word = route.params?.word || "";
   const [definition, setDefinition] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,9 +20,14 @@ export default function SearchScreen({ route }) {
       try {
         setLoading(true);
         const data = await fetchWordDefinition(word);
-        setDefinition(data[0]);
+        // Verifique se `data` é um array e tem pelo menos um item antes de definir `definition`
+        if (Array.isArray(data) && data.length > 0) {
+          setDefinition(data[0]);
+        } else {
+          setError("Definição não encontrada");
+        }
       } catch (error) {
-        setError("Definition not found");
+        setError("Erro ao buscar definição da palavra");
       } finally {
         setLoading(false);
       }
@@ -35,23 +40,30 @@ export default function SearchScreen({ route }) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.wordTitle}>{definition.word}</Text>
-      <Text style={styles.phonetic}>{definition.phonetic}</Text>
-      <Text style={styles.origin}>{definition.origin}</Text>
+      {definition && (
+        <>
+          <Text style={styles.wordTitle}>
+            {definition.word || "Palavra não encontrada"}
+          </Text>
+          <Text style={styles.phonetic}>{definition.phonetic || ""}</Text>
+          <Text style={styles.origin}>{definition.origin || ""}</Text>
 
-      {definition.meanings.map((meaning, index) => (
-        <View key={index} style={styles.meaningContainer}>
-          <Text style={styles.partOfSpeech}>{meaning.partOfSpeech}</Text>
-          {meaning.definitions.map((def, i) => (
-            <View key={i} style={styles.definitionContainer}>
-              <Text style={styles.definition}>{def.definition}</Text>
-              {def.example && (
-                <Text style={styles.example}>Example: {def.example}</Text>
-              )}
-            </View>
-          ))}
-        </View>
-      ))}
+          {definition.meanings &&
+            definition.meanings.map((meaning, index) => (
+              <View key={index} style={styles.meaningContainer}>
+                <Text style={styles.partOfSpeech}>{meaning.partOfSpeech}</Text>
+                {meaning.definitions.map((def, i) => (
+                  <View key={i} style={styles.definitionContainer}>
+                    <Text style={styles.definition}>{def.definition}</Text>
+                    {def.example && (
+                      <Text style={styles.example}>Example: {def.example}</Text>
+                    )}
+                  </View>
+                ))}
+              </View>
+            ))}
+        </>
+      )}
     </ScrollView>
   );
 }
