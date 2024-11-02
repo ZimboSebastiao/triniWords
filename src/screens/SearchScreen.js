@@ -5,8 +5,10 @@ import {
   ActivityIndicator,
   StyleSheet,
   ScrollView,
+  Pressable,
 } from "react-native";
 import { fetchWordDefinition } from "../apis/dictionaryApi";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function SearchScreen({ route }) {
   // const { word } = route.params;
@@ -20,7 +22,7 @@ export default function SearchScreen({ route }) {
       try {
         setLoading(true);
         const data = await fetchWordDefinition(word);
-        // Verifique se `data` é um array e tem pelo menos um item antes de definir `definition`
+
         if (Array.isArray(data) && data.length > 0) {
           setDefinition(data[0]);
         } else {
@@ -42,10 +44,23 @@ export default function SearchScreen({ route }) {
     <ScrollView contentContainerStyle={styles.container}>
       {definition && (
         <>
-          <Text style={styles.wordTitle}>
-            {definition.word || "Palavra não encontrada"}
-          </Text>
-          <Text style={styles.phonetic}>{definition.phonetic || ""}</Text>
+          <View style={styles.viewTitle}>
+            <Text style={styles.wordTitle}>
+              {definition.word || "Palavra não encontrada"}
+            </Text>
+            <MaterialCommunityIcons
+              name="book-open-variant"
+              color="#b1b4b5"
+              size={35}
+              style={{ padding: 30 }}
+            />
+          </View>
+          <View>
+            <Text style={styles.phonetic}>{definition.phonetic || ""}</Text>
+            <Pressable>
+              <MaterialCommunityIcons name="home" color="#3BB3BD" size={35} />
+            </Pressable>
+          </View>
           <Text style={styles.origin}>{definition.origin || ""}</Text>
 
           {definition.meanings &&
@@ -71,12 +86,13 @@ export default function SearchScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    padding: 20,
+    padding: 35,
+    marginVertical: 70,
   },
   wordTitle: {
-    fontSize: 24,
+    fontSize: 44,
     fontWeight: "bold",
-    color: "#3BB3BD",
+    color: "#30333C",
   },
   phonetic: {
     fontSize: 18,
@@ -112,5 +128,9 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
     marginTop: 20,
+  },
+  viewTitle: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
