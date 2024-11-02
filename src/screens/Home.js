@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   search: {
-    padding: 15,
+    padding: 25,
   },
   searchbar: {
     backgroundColor: "#fff",
@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
   },
   studying: {
     // backgroundColor: "red",
-    marginVertical: 50,
-    padding: 15,
+    marginVertical: 20,
+    padding: 25,
   },
   learn: {
     // backgroundColor: "yellow",
