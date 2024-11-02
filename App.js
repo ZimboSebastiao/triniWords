@@ -2,13 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  Search,
-  BookText,
-  Settings,
-  MessageCircle,
-  House,
-} from "lucide-react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Home from "./src/screens/Home";
 import SettingsScreen from "./src/screens/SettingsScreen";
