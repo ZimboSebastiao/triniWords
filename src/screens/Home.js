@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Searchbar, Card } from "react-native-paper";
+import { Searchbar, Card, ProgressBar, MD3Colors } from "react-native-paper";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -31,28 +31,43 @@ export default function Home() {
           <Card style={{ width: 200, backgroundColor: "#fff" }}>
             <Card.Cover
               source={require("../../assets/images/img1.jpg")}
-              style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
+              style={{
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                height: 160,
+              }}
             />
             <Card.Content style={{ padding: 10 }}>
               <Text
-                style={{ color: "#3BB3BD", fontWeight: "bold" }}
+                style={{ color: "#3BB3BD", fontWeight: "bold", padding: 4 }}
                 variant="titleLarge"
               >
                 Learn
               </Text>
               <Text
-                style={{ color: "#30333C", fontWeight: "bold", fontSize: 16 }}
+                style={{
+                  color: "#30333C",
+                  fontWeight: "bold",
+                  fontSize: 16,
+                  padding: 4,
+                }}
                 variant="bodyMedium"
               >
                 Let's Learn a New Word In English
               </Text>
-              <View>
+              <View style={styles.viewProgress}>
                 <Text
-                  style={{ color: "#b1b4b5", fontWeight: "bold" }}
+                  style={{ color: "#b1b4b5", fontWeight: "bold", padding: 4 }}
                   variant="bodyMedium"
                 >
                   New Word
                 </Text>
+                <ProgressBar
+                  progress={0.5}
+                  color="#3BB3BD"
+                  style={{ width: 40, height: 8, borderRadius: 20 }}
+                  variant="bodyMedium"
+                />
               </View>
             </Card.Content>
           </Card>
@@ -103,5 +118,10 @@ const styles = StyleSheet.create({
   learn: {
     // backgroundColor: "yellow",
     paddingTop: 10,
+  },
+  viewProgress: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
