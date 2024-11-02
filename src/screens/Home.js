@@ -28,8 +28,11 @@ export default function Home() {
       <View style={styles.studying}>
         <Text style={styles.title}>STUDYING</Text>
         <Pressable style={styles.learn}>
-          <Card style={{ width: 200 }}>
-            <Card.Cover source={require("../../assets/images/learn.png")} />
+          <Card style={{ width: 200, backgroundColor: "#3BB3BD" }}>
+            <Card.Cover
+              source={require("../../assets/images/learn.png")}
+              style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
+            />
             <Card.Content>
               <Text variant="titleLarge">BEGIN</Text>
               <Text variant="bodyMedium">Card content</Text>
