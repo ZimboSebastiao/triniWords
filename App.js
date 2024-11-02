@@ -61,7 +61,7 @@ export default function App() {
               <MaterialCommunityIcons
                 name="book-open-page-variant"
                 color={color}
-                size={size}
+                size={35}
               />
             ),
           }}
