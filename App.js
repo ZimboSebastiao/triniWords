@@ -8,6 +8,7 @@ import Home from "./src/screens/Home";
 import SettingsScreen from "./src/screens/SettingsScreen";
 import SearchScreen from "./src/screens/SearchScreen";
 import Chatbot from "./src/screens/Chatbot";
+import DicionaryScreen from "./src/screens/DicionaryScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -45,6 +46,18 @@ export default function App() {
             tabBarShowLabel: false,
             // tabBarActiveColor: "#ff80c3",
             tabBarInactiveTintColor: "#ffff",
+          }}
+        />
+        <Tab.Screen
+          name="Dicionary"
+          component={DicionaryScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: () => <BookText color="#3BB3BD" />,
+            tabBarShowLabel: false,
+            tabBarActiveTintColor: "#ff80c3",
+            tabBarInactiveTintColor: "#ffff",
+            // tabBarStyle: { display: "none" },
           }}
         />
         <Tab.Screen
