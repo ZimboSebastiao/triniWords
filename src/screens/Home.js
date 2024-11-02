@@ -28,14 +28,32 @@ export default function Home() {
       <View style={styles.studying}>
         <Text style={styles.title}>STUDYING</Text>
         <Pressable style={styles.learn}>
-          <Card style={{ width: 200, backgroundColor: "#3BB3BD" }}>
+          <Card style={{ width: 200, backgroundColor: "#fff" }}>
             <Card.Cover
-              source={require("../../assets/images/learn.png")}
+              source={require("../../assets/images/img1.jpg")}
               style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
             />
             <Card.Content>
-              <Text variant="titleLarge">BEGIN</Text>
-              <Text variant="bodyMedium">Card content</Text>
+              <Text
+                style={{ color: "#3BB3BD", fontWeight: "bold" }}
+                variant="titleLarge"
+              >
+                Learn
+              </Text>
+              <Text
+                style={{ color: "#30333C", fontWeight: "bold", fontSize: 16 }}
+                variant="bodyMedium"
+              >
+                Let's Learn a New Word In English
+              </Text>
+              <View>
+                <Text
+                  style={{ color: "#b1b4b5", fontWeight: "bold" }}
+                  variant="bodyMedium"
+                >
+                  New Word
+                </Text>
+              </View>
             </Card.Content>
           </Card>
         </Pressable>
@@ -80,8 +98,6 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   studying: {
-    // backgroundColor: "red",
-    marginVertical: 20,
     padding: 25,
   },
   learn: {
