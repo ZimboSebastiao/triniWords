@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import * as Font from "expo-font";
-import AppLoading from "expo-app-loading";
+import * as SplashScreen from "expo-splash-screen";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function useLoadFonts() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -13,6 +15,7 @@ export default function useLoadFonts() {
         "Roboto-Regular": require("../../assets/fonts/Roboto-Regular.ttf"),
       });
       setFontsLoaded(true);
+      SplashScreen.hideAsync();
     }
     loadFonts();
   }, []);
