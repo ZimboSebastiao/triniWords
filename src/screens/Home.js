@@ -33,7 +33,7 @@ export default function Home() {
               source={require("../../assets/images/img1.jpg")}
               style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
             />
-            <Card.Content>
+            <Card.Content style={{ padding: 10 }}>
               <Text
                 style={{ color: "#3BB3BD", fontWeight: "bold" }}
                 variant="titleLarge"
@@ -102,5 +102,6 @@ const styles = StyleSheet.create({
   },
   learn: {
     // backgroundColor: "yellow",
+    paddingTop: 10,
   },
 });
