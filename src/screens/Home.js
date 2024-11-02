@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Searchbar } from "react-native-paper";
+import { Searchbar, Card } from "react-native-paper";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -28,11 +28,13 @@ export default function Home() {
       <View style={styles.studying}>
         <Text style={styles.title}>STUDYING</Text>
         <Pressable style={styles.learn}>
-          <Image
-            source={require("../../assets/images/learn.png")}
-            style={{ width: 250, height: 250 }}
-          />
-          <Text>BEGIN</Text>
+          <Card style={{ width: 200 }}>
+            <Card.Cover source={require("../../assets/images/learn.png")} />
+            <Card.Content>
+              <Text variant="titleLarge">BEGIN</Text>
+              <Text variant="bodyMedium">Card content</Text>
+            </Card.Content>
+          </Card>
         </Pressable>
       </View>
     </View>
@@ -78,5 +80,8 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
     marginVertical: 50,
     padding: 15,
+  },
+  learn: {
+    // backgroundColor: "yellow",
   },
 });
