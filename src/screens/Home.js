@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Searchbar } from "react-native-paper";
 
@@ -27,6 +27,9 @@ export default function Home() {
       </View>
       <View style={styles.studying}>
         <Text style={styles.title}>STUDYING</Text>
+        <Pressable>
+          <Text>BEGIN</Text>
+        </Pressable>
       </View>
     </View>
   );
