@@ -1,7 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Searchbar } from "react-native-paper";
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = React.useState("");
   return (
     <View style={styles.container}>
       <View style={styles.saudacao}>
@@ -9,6 +11,19 @@ export default function Home() {
         <Text style={styles.subtitle}>
           What would you like to train today? Search beloww.
         </Text>
+      </View>
+      <View style={styles.search}>
+        <Searchbar
+          placeholder="Looking for..."
+          placeholderTextColor="#b1b4b5"
+          iconColor="#3BB3BD"
+          clearIcon="close"
+          clearIconColor="#3BB3BD"
+          style={styles.searchbar}
+          inputStyle={styles.input}
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+        />
       </View>
     </View>
   );
@@ -35,5 +50,18 @@ const styles = StyleSheet.create({
     width: "65%",
     textAlign: "center",
     fontWeight: "bold",
+  },
+  search: {
+    padding: 15,
+  },
+  searchbar: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "#fff",
+  },
+  input: {
+    fontSize: 16,
+    color: "#333",
   },
 });
