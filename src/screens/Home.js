@@ -25,6 +25,9 @@ export default function Home() {
           value={searchQuery}
         />
       </View>
+      <View style={styles.studying}>
+        <Text style={styles.title}>STUDYING</Text>
+      </View>
     </View>
   );
 }
@@ -63,5 +66,10 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 16,
     color: "#333",
+  },
+  studying: {
+    // backgroundColor: "red",
+    marginVertical: 50,
+    padding: 15,
   },
 });
