@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     padding: 35,
-    marginVertical: 70,
   },
   wordTitle: {
     fontSize: 44,

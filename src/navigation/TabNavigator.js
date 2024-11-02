@@ -43,6 +43,7 @@ export default function TabNavigator() {
             <MaterialCommunityIcons name="magnify" color={color} size={35} />
           ),
           tabBarButton: () => null,
+          tabBarStyle: { display: "none" },
         }}
       />
       <Tab.Screen
