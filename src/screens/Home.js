@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Searchbar } from "react-native-paper";
 
@@ -27,7 +27,11 @@ export default function Home() {
       </View>
       <View style={styles.studying}>
         <Text style={styles.title}>STUDYING</Text>
-        <Pressable>
+        <Pressable style={styles.learn}>
+          <Image
+            source={require("../../assets/images/learn.png")}
+            style={{ width: 250, height: 250 }}
+          />
           <Text>BEGIN</Text>
         </Pressable>
       </View>
