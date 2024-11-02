@@ -62,7 +62,7 @@ export default function Home() {
                     }}
                     variant="bodyMedium"
                   >
-                    Let's Learn a New Word In English
+                    Let's Learn a New Word in English
                   </Text>
                   <View style={styles.viewProgress}>
                     <Text
@@ -89,7 +89,7 @@ export default function Home() {
             <Pressable style={[styles.learn, styles.spacing]}>
               <Card style={{ width: 200, backgroundColor: "#fff" }}>
                 <Card.Cover
-                  source={require("../../assets/images/img1.jpg")}
+                  source={require("../../assets/images/img2.jpg")}
                   style={{
                     borderBottomLeftRadius: 0,
                     borderBottomRightRadius: 0,
@@ -101,7 +101,7 @@ export default function Home() {
                     style={{ color: "#3BB3BD", fontWeight: "bold", padding: 4 }}
                     variant="titleLarge"
                   >
-                    Learn
+                    Training
                   </Text>
                   <Text
                     style={{
@@ -112,7 +112,7 @@ export default function Home() {
                     }}
                     variant="bodyMedium"
                   >
-                    Let's Learn a New Word In English
+                    Let's Practice English Words
                   </Text>
                   <View style={styles.viewProgress}>
                     <Text
@@ -123,10 +123,10 @@ export default function Home() {
                       }}
                       variant="bodyMedium"
                     >
-                      New Word
+                      Groups of Words
                     </Text>
                     <ProgressBar
-                      progress={0.5}
+                      progress={0.7}
                       color="#3BB3BD"
                       style={{ width: 40, height: 8, borderRadius: 20 }}
                       variant="bodyMedium"
@@ -195,5 +195,6 @@ const styles = StyleSheet.create({
   spacing: {
     marginRight: 25,
     marginBottom: 7,
+    marginLeft: 2,
   },
 });
