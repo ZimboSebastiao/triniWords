@@ -36,7 +36,7 @@ export default function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Search"
+        name="SearchScreen"
         component={SearchScreen}
         options={{
           tabBarIcon: ({ color, size }) => (

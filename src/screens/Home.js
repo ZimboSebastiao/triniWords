@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Searchbar, Card, ProgressBar, MD3Colors } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { fetchWordDefinition } from "../apis/dictionaryApi";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");

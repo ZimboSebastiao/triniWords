@@ -7,7 +7,9 @@ export const fetchWordDefinition = async (word) => {
     const response = await axios.get(`${BASE_URL}/${word}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching word definition:", error);
-    throw error;
+    if (error.response && error.response.status === 404) {
+      throw new Error("Palavra não encontrada no dicionário.");
+    }
+    throw new Error("Erro ao buscar definição da palavra. Tente novamente.");
   }
 };

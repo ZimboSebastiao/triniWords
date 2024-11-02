@@ -20,7 +20,7 @@ export default function SearchScreen({ route }) {
       try {
         setLoading(true);
         const data = await fetchWordDefinition(word);
-        setDefinition(data[0]); // Pega a primeira definição retornada
+        setDefinition(data[0]);
       } catch (error) {
         setError("Definition not found");
       } finally {
@@ -58,6 +58,7 @@ export default function SearchScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: "center",
     padding: 20,
   },
   wordTitle: {
