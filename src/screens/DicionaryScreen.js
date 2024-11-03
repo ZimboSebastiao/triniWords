@@ -39,6 +39,8 @@ export default function DicionaryScreen() {
           onSubmitEditing={handleSearch}
         />
       </View>
+      <Text style={styles.title}>All Words</Text>
+      <View style={styles.viewAll}></View>
     </ScrollView>
   );
 }
@@ -46,7 +48,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#EDEFF0",
-    // justifyContent: "center",
     padding: 30,
     paddingTop: 50,
   },
@@ -73,5 +74,8 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 16,
     color: "#333",
+  },
+  viewAll: {
+    backgroundColor: "red",
   },
 });
