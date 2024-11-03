@@ -17,10 +17,8 @@ export default function DicionaryScreen() {
   const navigation = useNavigation();
   const [learnedWords, setLearnedWords] = useState([]);
 
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
-      navigation.navigate("SearchScreen", { word: searchQuery.trim() });
-    }
+  const handleSearch = (term) => {
+    navigation.navigate("SearchScreen", { word: term });
   };
 
   useEffect(() => {
