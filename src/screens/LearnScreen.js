@@ -64,20 +64,30 @@ export default function LearnScreen() {
         setError(null);
 
         const data = await fetchRandomWord();
-        if (data && data[0]) {
-          setWordData(data);
-          setDefinition(data[0]);
-          await saveWord(data[0].word);
-          const translation = await translateWord(data[0].word);
-          setTranslatedWord(translation);
+        console.log("Dados recebidos da API:", data);
+
+        if (data && Array.isArray(data) && data.length > 0) {
+          const wordDetail = data[0];
+
+          if (wordDetail.word && wordDetail.phonetics) {
+            setWordData(data);
+            setDefinition(wordDetail);
+            await saveWord(wordDetail.word);
+            const translation = await translateWord(wordDetail.word);
+            setTranslatedWord(translation);
+          } else {
+            console.warn("Estrutura de dados inesperada:", wordDetail);
+            throw new Error("Word data is unavailable");
+          }
         } else {
+          console.warn("Resposta da API não contém dados válidos:", data);
           throw new Error("Word data is unavailable");
         }
 
         await scheduleDailyNotification();
       } catch (err) {
         console.error("Erro ao buscar a palavra:", err);
-        setError("Failed to fetch the word.");
+        setError("Failed to fetch the word: " + err.message);
       } finally {
         setLoading(false);
       }
@@ -97,7 +107,6 @@ export default function LearnScreen() {
       const audioUrl = definition.phonetics.find((p) => p.audio)?.audio;
       if (audioUrl) {
         try {
-          // Se já houver um so
           if (sound) {
             await sound.stopAsync();
             await sound.unloadAsync();
