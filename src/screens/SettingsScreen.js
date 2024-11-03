@@ -51,6 +51,7 @@ export default function SettingsScreen({ navigation }) {
                 padding: 10,
                 backgroundColor: pressed ? "#3BB3BD" : "#fff",
                 marginVertical: 5,
+                borderRadius: 8,
               },
             ]}
           >
