@@ -28,12 +28,12 @@ export default function LearnScreen() {
         title: "Learn a new word!",
         body: "Don't forget to check out your new word of the day!",
       },
-      // trigger: {
-      //   hour: 8,
-      //   minute: 0,
-      //   repeats: true,
-      // },
-      trigger: null,
+      trigger: {
+        hour: 9,
+        minute: 0,
+        repeats: true,
+      },
+      // trigger: null,
     });
   };
 
@@ -125,7 +125,6 @@ export default function LearnScreen() {
             await sound.stopAsync();
             await sound.unloadAsync();
           }
-
           const { sound: newSound } = await Audio.Sound.createAsync({
             uri: audioUrl,
           });
@@ -136,10 +135,10 @@ export default function LearnScreen() {
           console.error("Erro ao reproduzir o áudio:", error);
         }
       } else {
-        console.warn("URL do áudio não encontrado.");
+        console.log("URL do áudio não encontrado.");
       }
     } else {
-      console.warn("Definição ou fonética não disponível.");
+      console.log("Definição ou fonética não disponível.");
     }
   };
 
