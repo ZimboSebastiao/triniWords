@@ -100,7 +100,10 @@ export default function Home() {
               </Card>
             </Pressable>
 
-            <Pressable style={[styles.learn, styles.spacing]}>
+            <Pressable
+              style={[styles.learn, styles.spacing]}
+              onPress={() => navigation.navigate("Chatbot")}
+            >
               <Card style={{ width: 200, backgroundColor: "#fff" }}>
                 <Card.Cover
                   source={require("../../assets/images/img2.jpg")}
@@ -126,7 +129,7 @@ export default function Home() {
                     }}
                     variant="bodyMedium"
                   >
-                    Let's Practice English Words
+                    Let's Practice Your English
                   </Text>
                   <View style={styles.viewProgress}>
                     <Text
@@ -137,7 +140,7 @@ export default function Home() {
                       }}
                       variant="bodyMedium"
                     >
-                      Groups of Words
+                      Conversation
                     </Text>
                     <ProgressBar
                       progress={0.7}
