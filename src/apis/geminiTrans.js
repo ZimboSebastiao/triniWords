@@ -33,8 +33,8 @@ export const sendWordToGemini = async (word, retries = 3) => {
         const parts = response.data.candidates[0].content.parts;
         if (parts && parts.length > 0) {
           const translation = parts[0].text.trim();
-          console.log("Tradução obtida:", translation); // Log da tradução
-          return translation; // Retorna a tradução
+          console.log("Tradução obtida:", translation);
+          return translation;
         } else {
           throw new Error("Conteúdo não encontrado.");
         }
@@ -42,7 +42,7 @@ export const sendWordToGemini = async (word, retries = 3) => {
         throw new Error("Resposta da API inválida.");
       }
     } catch (error) {
-      console.error("Erro ao buscar a palavra:", error.message); // Log do erro
+      console.error("Erro ao buscar a palavra:", error.message);
       if (error.response && error.response.status === 429) {
         retries--;
         const waitTime = 2000 * (3 - retries);
