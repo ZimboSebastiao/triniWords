@@ -73,7 +73,7 @@ export default function TabNavigator() {
         component={SettingsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cog" color={color} size={35} />
+            <MaterialCommunityIcons name="history" color={color} size={35} />
           ),
         }}
       />
