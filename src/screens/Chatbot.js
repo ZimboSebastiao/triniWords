@@ -91,7 +91,7 @@ export default function Chatbot() {
         {...props}
         containerStyle={{
           borderRadius: 16,
-          backgroundColor: "#f2f8fc",
+          backgroundColor: "#fff",
           marginHorizontal: 8,
           margin: 10,
           borderTopWidth: 0,
@@ -102,10 +102,6 @@ export default function Chatbot() {
 
   return (
     <View style={styles.chatContainer}>
-      <Text style={styles.alertText}>
-        Esta consulta de saúde com IA não é uma opinião médica. Consulte seu
-        médico para um diagnóstico e prescrição precisos.
-      </Text>
       <GiftedChat
         messages={messages}
         onSend={(messages) => onSend(messages)}
@@ -113,7 +109,7 @@ export default function Chatbot() {
         renderBubble={renderBubble}
         renderSend={renderSend}
         renderInputToolbar={renderInputToolbar}
-        placeholder="Digite sua mensagem..."
+        placeholder="How can I help you today?"
         placeholderTextColor="#5e5f61"
         isTyping={isTyping}
       />
@@ -124,7 +120,7 @@ export default function Chatbot() {
 const styles = StyleSheet.create({
   chatContainer: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#EDEFF0",
   },
   inputContainer: {
     backgroundColor: "transparent",
