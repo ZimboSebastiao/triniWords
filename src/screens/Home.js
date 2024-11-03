@@ -47,7 +47,10 @@ export default function Home() {
         <Text style={styles.title}>STUDYING</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.viewButtons}>
-            <Pressable style={[styles.learn, styles.spacing]}>
+            <Pressable
+              style={[styles.learn, styles.spacing]}
+              onPress={() => navigation.navigate("LearnScreen")}
+            >
               <Card style={{ width: 200, backgroundColor: "#fff" }}>
                 <Card.Cover
                   source={require("../../assets/images/img1.jpg")}
