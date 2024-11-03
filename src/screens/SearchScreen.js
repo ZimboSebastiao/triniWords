@@ -23,6 +23,8 @@ export default function SearchScreen({ route }) {
     const getDefinition = async () => {
       try {
         setLoading(true);
+        setError(null);
+        setDefinition(null);
         const data = await fetchWordDefinition(word);
 
         if (Array.isArray(data) && data.length > 0) {
