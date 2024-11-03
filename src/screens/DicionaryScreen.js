@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#EDEFF0",
-    padding: 30,
+    padding: 20,
     paddingTop: 50,
   },
   viewIcons: {

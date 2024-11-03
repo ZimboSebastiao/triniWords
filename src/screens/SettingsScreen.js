@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { View, Text, Pressable, FlatList } from "react-native";
+import { View, Text, Pressable, FlatList, StyleSheet } from "react-native";
 import { useSearchHistory } from "../context/SearchHistoryContext";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function SettingsScreen({ navigation }) {
   const { searchHistory, addSearchTerm } = useSearchHistory();
@@ -10,10 +11,34 @@ export default function SettingsScreen({ navigation }) {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text style={{ fontSize: 24, marginBottom: 20 }}>SettingsScreen</Text>
-      <Text style={{ fontSize: 18, marginBottom: 10 }}>
-        Histórico de Pesquisas:
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#EDEFF0",
+        padding: 20,
+        paddingTop: 50,
+      }}
+    >
+      <View style={styles.viewIcons}>
+        <Pressable onPress={() => navigation.navigate("Home")}>
+          <MaterialCommunityIcons
+            name="arrow-left-thin"
+            color="#3BB3BD"
+            size={35}
+          />
+        </Pressable>
+        <Text style={styles.title}>Historic</Text>
+        <MaterialCommunityIcons name="arm-flex" color="#3BB3BD" size={35} />
+      </View>
+      <Text
+        style={{
+          fontSize: 18,
+          marginBottom: 20,
+          marginTop: 50,
+          fontWeight: "bold",
+        }}
+      >
+        Search History
       </Text>
       <FlatList
         data={searchHistory}
@@ -36,3 +61,20 @@ export default function SettingsScreen({ navigation }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    padding: 35,
+  },
+  viewIcons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  title: {
+    fontSize: 18,
+    fontFamily: "Roboto-Bold",
+    marginBottom: 10,
+    color: "#30333C",
+  },
+});
