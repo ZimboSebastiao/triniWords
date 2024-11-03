@@ -28,11 +28,12 @@ export default function LearnScreen() {
         title: "Learn a new word!",
         body: "Don't forget to check out your new word of the day!",
       },
-      trigger: {
-        hour: 8,
-        minute: 0,
-        repeats: true,
-      },
+      // trigger: {
+      //   hour: 8,
+      //   minute: 0,
+      //   repeats: true,
+      // },
+      trigger: null,
     });
   };
 
@@ -58,6 +59,19 @@ export default function LearnScreen() {
   };
 
   useEffect(() => {
+    const requestNotificationPermission = async () => {
+      const { status } = await Notifications.getPermissionsAsync();
+      if (status !== "granted") {
+        const { status: newStatus } =
+          await Notifications.requestPermissionsAsync();
+        if (newStatus !== "granted") {
+          alert("Você precisa permitir notificações para usar este recurso.");
+          return;
+        }
+      }
+      await scheduleDailyNotification();
+    };
+
     const fetchWord = async () => {
       try {
         setLoading(true);
@@ -92,7 +106,7 @@ export default function LearnScreen() {
         setLoading(false);
       }
     };
-
+    requestNotificationPermission();
     fetchWord();
 
     return () => {

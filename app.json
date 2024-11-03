@@ -1,5 +1,6 @@
 {
   "expo": {
+    "permissions": ["NOTIFICATIONS"],
     "name": "Trini's Words",
     "slug": "Trini's Words",
     "version": "1.0.0",
@@ -12,13 +13,18 @@
       "backgroundColor": "#fff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.triniswords.app",
+      "infoPlist": {
+        "NSUserTrackingUsageDescription": "Esse aplicativo usa notificações para ajudar você a aprender palavras novas diariamente."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#fff"
-      }
+      },
+      "permissions": ["RECEIVE_BOOT_COMPLETED", "VIBRATE", "WAKE_LOCK"]
     },
     "web": {
       "favicon": "./assets/logo.png"
