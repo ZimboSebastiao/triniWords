@@ -65,7 +65,7 @@ export default function Chatbot() {
         {...props}
         wrapperStyle={{
           left: {
-            backgroundColor: "#F2F8FD",
+            backgroundColor: "#fff",
           },
           right: {
             backgroundColor: "#0076FD",
