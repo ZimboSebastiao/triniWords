@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Searchbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function DicionaryScreen() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,6 +14,18 @@ export default function DicionaryScreen() {
       navigation.navigate("SearchScreen", { word: searchQuery.trim() });
     }
   };
+
+  useEffect(() => {
+    const loadLearnedWords = async () => {
+      const existingWords = await AsyncStorage.getItem("learnedWords");
+      if (existingWords) {
+        const wordsArray = JSON.parse(existingWords);
+        console.log(wordsArray);
+      }
+    };
+
+    loadLearnedWords();
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
