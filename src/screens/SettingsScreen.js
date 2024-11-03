@@ -5,10 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function SettingsScreen({ navigation }) {
   const [searchHistory, setSearchHistory] = useState([]);
 
-  // Função para adicionar uma palavra ao histórico de pesquisas
   const addSearchTerm = async (term) => {
     try {
-      const updatedHistory = [...searchHistory, term];
+      const updatedHistory = [...new Set([...searchHistory, term])]; // Evita duplicatas
       setSearchHistory(updatedHistory);
       await AsyncStorage.setItem(
         "searchHistory",
@@ -19,12 +18,10 @@ export default function SettingsScreen({ navigation }) {
     }
   };
 
-  // Função para navegar até a SearchScreen com a palavra pesquisada
   const handleSearch = (term) => {
-    navigation.navigate("SearchScreen", { searchTerm: term });
+    navigation.navigate("SearchScreen", { word: term, addSearchTerm }); // Passa a função também
   };
 
-  // Função para carregar o histórico de pesquisas do AsyncStorage
   const loadSearchHistory = async () => {
     try {
       const history = await AsyncStorage.getItem("searchHistory");
@@ -36,15 +33,8 @@ export default function SettingsScreen({ navigation }) {
     }
   };
 
-  // Carregar o histórico ao montar o componente
   useEffect(() => {
     loadSearchHistory();
-  }, []);
-
-  // Adicione algumas palavras de exemplo ao histórico ao inicializar
-  useEffect(() => {
-    const exampleTerms = ["React Native", "JavaScript", "Expo"];
-    exampleTerms.forEach((term) => addSearchTerm(term));
   }, []);
 
   return (
