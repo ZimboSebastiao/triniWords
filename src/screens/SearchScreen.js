@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { fetchWordDefinition } from "../apis/dictionaryApi";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Audio } from "expo-av";
 
 export default function SearchScreen({ route }) {
   // const { word } = route.params;
@@ -16,6 +17,7 @@ export default function SearchScreen({ route }) {
   const [definition, setDefinition] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sound, setSound] = useState(null);
 
   useEffect(() => {
     const getDefinition = async () => {
@@ -35,7 +37,23 @@ export default function SearchScreen({ route }) {
       }
     };
     getDefinition();
+    return () => {
+      if (sound) {
+        sound.unloadAsync();
+      }
+    };
   }, [word]);
+
+  const playAudio = async () => {
+    if (definition && definition.phonetics) {
+      const audioUrl = definition.phonetics.find((p) => p.audio)?.audio;
+      if (audioUrl) {
+        const { sound } = await Audio.Sound.createAsync({ uri: audioUrl });
+        setSound(sound);
+        await sound.playAsync();
+      }
+    }
+  };
 
   if (loading) return <ActivityIndicator size="large" color="#3BB3BD" />;
   if (error) return <Text style={styles.errorText}>{error}</Text>;
@@ -57,7 +75,7 @@ export default function SearchScreen({ route }) {
           </View>
           <View style={styles.viewPhonetic}>
             <Text style={styles.phonetic}>{definition.phonetic || ""}</Text>
-            <Pressable>
+            <Pressable onPress={playAudio}>
               <MaterialCommunityIcons
                 name="volume-high"
                 color="#3BB3BD"
