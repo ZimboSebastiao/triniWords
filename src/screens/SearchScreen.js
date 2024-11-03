@@ -12,7 +12,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 
 export default function SearchScreen({ route }) {
-  // const { word } = route.params;
   const word = route.params?.word || "";
   const [definition, setDefinition] = useState(null);
   const [loading, setLoading] = useState(true);
