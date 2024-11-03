@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#EDEFF0",
     // justifyContent: "center",
     padding: 30,
-    marginVertical: 20,
+    paddingTop: 50,
   },
   viewIcons: {
     flexDirection: "row",
