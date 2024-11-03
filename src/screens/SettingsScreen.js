@@ -49,7 +49,7 @@ export default function SettingsScreen({ navigation }) {
             style={({ pressed }) => [
               {
                 padding: 10,
-                backgroundColor: pressed ? "#ddd" : "#fff",
+                backgroundColor: pressed ? "#3BB3BD" : "#fff",
                 marginVertical: 5,
               },
             ]}
