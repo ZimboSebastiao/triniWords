@@ -14,7 +14,7 @@ import { useSearchHistory } from "../context/SearchHistoryContext";
 
 export default function SearchScreen({ route }) {
   const { word } = route.params;
-  const { addSearchTerm } = useSearchHistory(); // Chamada ao contexto para pegar a função
+  const { addSearchTerm } = useSearchHistory();
 
   const [definition, setDefinition] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ export default function SearchScreen({ route }) {
 
     const getDefinition = async () => {
       if (word) {
-        addSearchTerm(word); // Adiciona a palavra ao histórico
+        addSearchTerm(word);
         console.log("Palavra adicionada ao histórico:", word);
       }
 

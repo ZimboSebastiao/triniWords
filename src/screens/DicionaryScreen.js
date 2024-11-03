@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import React, { useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Searchbar } from "react-native-paper";
@@ -17,11 +17,13 @@ export default function DicionaryScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.viewIcons}>
-        <MaterialCommunityIcons
-          name="arrow-left-thin"
-          color="#3BB3BD"
-          size={35}
-        />
+        <Pressable onPress={() => navigation.navigate("Home")}>
+          <MaterialCommunityIcons
+            name="arrow-left-thin"
+            color="#3BB3BD"
+            size={35}
+          />
+        </Pressable>
         <Text style={styles.title}>Dictionary</Text>
         <MaterialCommunityIcons name="arm-flex" color="#3BB3BD" size={35} />
       </View>
