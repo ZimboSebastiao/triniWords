@@ -10,20 +10,31 @@ import {
 import { fetchWordDefinition } from "../apis/dictionaryApi";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
+import { useSearchHistory } from "../context/SearchHistoryContext";
 
 export default function SearchScreen({ route }) {
-  const word = route.params?.word || "";
+  const { word } = route.params;
+  const { addSearchTerm } = useSearchHistory(); // Chamada ao contexto para pegar a função
+
   const [definition, setDefinition] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sound, setSound] = useState(null);
 
   useEffect(() => {
+    console.log("Parâmetros recebidos:", { word });
+
     const getDefinition = async () => {
+      if (word) {
+        addSearchTerm(word); // Adiciona a palavra ao histórico
+        console.log("Palavra adicionada ao histórico:", word);
+      }
+
       try {
         setLoading(true);
         setError(null);
         setDefinition(null);
+
         const data = await fetchWordDefinition(word);
 
         if (Array.isArray(data) && data.length > 0) {
@@ -37,7 +48,9 @@ export default function SearchScreen({ route }) {
         setLoading(false);
       }
     };
+
     getDefinition();
+
     return () => {
       if (sound) {
         sound.unloadAsync();

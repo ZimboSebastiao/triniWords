@@ -2,6 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import useLoadFonts from "./src/utils/useLoadFonts";
 import TabNavigator from "./src/navigation/TabNavigator";
+import { SearchHistoryProvider } from "./src/context/SearchHistoryContext";
 
 export default function App() {
   const fontsLoaded = useLoadFonts();
@@ -12,8 +13,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
+    <SearchHistoryProvider>
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    </SearchHistoryProvider>
   );
 }

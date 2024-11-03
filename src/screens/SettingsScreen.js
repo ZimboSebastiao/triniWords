@@ -1,45 +1,13 @@
+import React, { useEffect } from "react";
 import { View, Text, Pressable, FlatList } from "react-native";
-import React, { useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSearchHistory } from "../context/SearchHistoryContext";
 
 export default function SettingsScreen({ navigation }) {
-  const [searchHistory, setSearchHistory] = useState([]);
+  const { searchHistory, addSearchTerm } = useSearchHistory();
 
-  // Função para adicionar uma palavra ao histórico de pesquisas
-  const addSearchTerm = async (term) => {
-    try {
-      const updatedHistory = [...new Set([...searchHistory, term])]; // Evita duplicatas
-      setSearchHistory(updatedHistory);
-      await AsyncStorage.setItem(
-        "searchHistory",
-        JSON.stringify(updatedHistory)
-      );
-    } catch (error) {
-      console.error("Erro ao armazenar no AsyncStorage:", error);
-    }
-  };
-
-  // Função para navegar até a SearchScreen com a palavra pesquisada
   const handleSearch = (term) => {
-    navigation.navigate("SearchScreen", { word: term, addSearchTerm }); // Passa a função
+    navigation.navigate("SearchScreen", { word: term });
   };
-
-  // Função para carregar o histórico de pesquisas do AsyncStorage
-  const loadSearchHistory = async () => {
-    try {
-      const history = await AsyncStorage.getItem("searchHistory");
-      if (history !== null) {
-        setSearchHistory(JSON.parse(history));
-      }
-    } catch (error) {
-      console.error("Erro ao carregar do AsyncStorage:", error);
-    }
-  };
-
-  // Carregar o histórico ao montar o componente
-  useEffect(() => {
-    loadSearchHistory();
-  }, []);
 
   return (
     <View style={{ padding: 20 }}>
