@@ -14,7 +14,7 @@ export const sendWordToGemini = async (word, retries = 3) => {
             {
               parts: [
                 {
-                  text: `Por favor, traduza a seguinte palavra para o português: "${word}". Não inclua contexto adicional ou explicações. Apenas forneça a tradução.`,
+                  text: `Por favor, traduza a seguinte palavra para o português: "${word}". Não inclua contexto adicional ou explicações. Apenas forneça a tradução para o português.`,
                 },
               ],
             },

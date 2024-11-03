@@ -96,20 +96,27 @@ export default function LearnScreen() {
     if (definition && definition.phonetics) {
       const audioUrl = definition.phonetics.find((p) => p.audio)?.audio;
       if (audioUrl) {
-        if (sound) {
-          await sound.stopAsync();
-          await sound.unloadAsync();
-        }
         try {
+          // Se já houver um so
+          if (sound) {
+            await sound.stopAsync();
+            await sound.unloadAsync();
+          }
+
           const { sound: newSound } = await Audio.Sound.createAsync({
             uri: audioUrl,
           });
           setSound(newSound);
+
           await newSound.playAsync();
         } catch (error) {
           console.error("Erro ao reproduzir o áudio:", error);
         }
+      } else {
+        console.warn("URL do áudio não encontrado.");
       }
+    } else {
+      console.warn("Definição ou fonética não disponível.");
     }
   };
 
@@ -123,7 +130,7 @@ export default function LearnScreen() {
           <>
             <View style={styles.viewTitle}>
               <Text style={styles.wordTitle}>
-                {definition.word || "Palavra não encontrada"} - {translatedWord}
+                {definition.word || "Palavra não encontrada"}
               </Text>
               <MaterialCommunityIcons
                 name="book-open-variant"
@@ -132,6 +139,7 @@ export default function LearnScreen() {
                 style={{ padding: 30 }}
               />
             </View>
+
             <View style={styles.viewPhonetic}>
               <Text style={styles.phonetic}>{definition.phonetic || ""}</Text>
               <Pressable onPress={playAudio}>
@@ -143,6 +151,10 @@ export default function LearnScreen() {
                 />
               </Pressable>
             </View>
+            <View style={styles.viewTranslation}>
+              <Text style={styles.textTranslation}>{translatedWord}</Text>
+            </View>
+
             <Text style={styles.origin}>{definition.origin || ""}</Text>
 
             {definition.meanings &&
@@ -182,6 +194,9 @@ const styles = StyleSheet.create({
   },
   viewTitle: {
     alignItems: "center",
+    flexDirection: "row",
+    width: "100%",
+    paddingTop: 25,
   },
   wordTitle: {
     fontSize: 32,
@@ -190,6 +205,7 @@ const styles = StyleSheet.create({
   viewPhonetic: {
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
   },
   phonetic: {
     fontSize: 20,
@@ -220,5 +236,16 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     fontSize: 18,
+  },
+  viewTranslation: {
+    backgroundColor: "#d4d6d6",
+    padding: 12,
+    borderRadius: 10,
+    width: "100%",
+  },
+  textTranslation: {
+    color: "#30333C",
+    fontWeight: "bold",
+    fontSize: 15,
   },
 });
