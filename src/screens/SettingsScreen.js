@@ -74,7 +74,7 @@ export default function SettingsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    padding: 35,
+    padding: 20,
   },
   viewIcons: {
     flexDirection: "row",
