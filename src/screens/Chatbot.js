@@ -68,7 +68,7 @@ export default function Chatbot() {
             backgroundColor: "#fff",
           },
           right: {
-            backgroundColor: "#0076FD",
+            backgroundColor: "#3BB3BD",
           },
         }}
       />
