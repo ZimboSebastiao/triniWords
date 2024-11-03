@@ -85,6 +85,11 @@ export default function DicionaryScreen() {
             ]}
           >
             <Text style={styles.wordText}>{item.word || item}</Text>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              color="#b1b4b5"
+              size={35}
+            />
           </Pressable>
         )}
         contentContainerStyle={styles.viewAll}
@@ -124,8 +129,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
   },
-  viewAll: {
-    backgroundColor: "red",
+
+  wordText: {
+    fontSize: 18,
   },
-  wordContainer: {},
 });
