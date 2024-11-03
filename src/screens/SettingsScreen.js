@@ -52,10 +52,18 @@ export default function SettingsScreen({ navigation }) {
                 backgroundColor: pressed ? "#3BB3BD" : "#fff",
                 marginVertical: 5,
                 borderRadius: 8,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
               },
             ]}
           >
             <Text style={{ fontSize: 18 }}>{item}</Text>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              color="#b1b4b5"
+              size={35}
+            />
           </Pressable>
         )}
       />
