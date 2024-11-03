@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  FlatList,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Searchbar } from "react-native-paper";
@@ -8,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function DicionaryScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const navigation = useNavigation();
+  const [learnedWords, setLearnedWords] = useState([]);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -21,6 +29,7 @@ export default function DicionaryScreen() {
       if (existingWords) {
         const wordsArray = JSON.parse(existingWords);
         console.log(wordsArray);
+        setLearnedWords(wordsArray);
       }
     };
 
@@ -28,7 +37,7 @@ export default function DicionaryScreen() {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <View style={styles.viewIcons}>
         <Pressable onPress={() => navigation.navigate("Home")}>
           <MaterialCommunityIcons
@@ -55,10 +64,35 @@ export default function DicionaryScreen() {
         />
       </View>
       <Text style={styles.title}>All Words</Text>
-      <View style={styles.viewAll}></View>
-    </ScrollView>
+      <FlatList
+        data={learnedWords}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <Pressable
+            onPress={() => handleSearch(item.word || item)}
+            style={({ pressed }) => [
+              {
+                padding: 10,
+                backgroundColor: pressed ? "#3BB3BD" : "#fff",
+                marginVertical: 5,
+                borderRadius: 5,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: 18,
+                margin: 3,
+              },
+            ]}
+          >
+            <Text style={styles.wordText}>{item.word || item}</Text>
+          </Pressable>
+        )}
+        contentContainerStyle={styles.viewAll}
+      />
+    </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -93,4 +127,5 @@ const styles = StyleSheet.create({
   viewAll: {
     backgroundColor: "red",
   },
+  wordContainer: {},
 });
