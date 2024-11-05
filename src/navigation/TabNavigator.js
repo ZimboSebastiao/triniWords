@@ -59,7 +59,7 @@ export default function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Dicionary"
+        name="DicionaryScreen"
         component={DicionaryScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
