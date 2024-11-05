@@ -1,20 +1,41 @@
 import axios from "axios";
-import { KEY_TRANS } from "@env";
+import { API_KEY } from "@env";
 
 // Função de espera
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const sendWordToGemini = async (word, retries = 3) => {
+export const sendWordToGeminiDefin = async (word, retries = 3) => {
   while (retries > 0) {
     try {
       const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${KEY_TRANS}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
         {
           contents: [
             {
               parts: [
                 {
-                  text: `Por favor, traduza a seguinte palavra para o português: "${word}". Não inclua contexto adicional ou explicações. Apenas forneça a tradução para o português.`,
+                  text: ` Você é um professor de inglês altamente qualificado, especializado em ensinar falantes de português. Sua tarefa é receber uma palavra e criar uma aula completa e envolvente sobre ela, cobrindo os seguintes pontos:
+
+                    1. **Significado em português**: Explique o significado da palavra em português de forma clara e objetiva.
+
+                    2. **Pronúncia em inglês**: Ofereça uma dica prática de pronúncia para que o aluno possa treinar corretamente.
+
+                    3. **Uso em frases**:
+                      - Exemplos de uso da palavra em frases completas no passado, presente e futuro, acompanhados de suas traduções para o português.
+                      - Contextos diferentes (formal, informal, profissional, cotidiano).
+
+                    4. **Dicas gramaticais**:
+                      - Explique em que contextos a palavra pode ser usada (por exemplo, substantivo, verbo, adjetivo, etc.).
+                      - Regras importantes associadas à palavra (por exemplo, formas irregulares, conjugações, preposições associadas, etc.).
+
+                    5. **Dicas culturais**:
+                      - Alguma curiosidade ou contexto cultural sobre o uso da palavra em países de língua inglesa, se aplicável.
+
+                    6. **Prática adicional**:
+                      - Sugira uma atividade prática para o aluno usar a palavra em frases próprias, de forma que ele se sinta confiante em aplicar o que aprendeu.
+
+                    Certifique-se de que cada seção esteja claramente identificada e formatada com títulos em negrito e separada por quebras de linha. A palavra para a aula é: "${word}.
+                    `,
                 },
               ],
             },

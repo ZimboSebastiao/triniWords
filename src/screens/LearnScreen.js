@@ -13,6 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Audio } from "expo-av";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { sendWordToGemini } from "../apis/geminiTrans";
+import GeminiDefinition from "../utils/renderGeminiDefinition ";
 
 export default function LearnScreen() {
   const [wordData, setWordData] = useState(null);
@@ -21,6 +22,9 @@ export default function LearnScreen() {
   const [error, setError] = useState(null);
   const [sound, setSound] = useState(null);
   const [definition, setDefinition] = useState(null);
+  const [attemptCount, setAttemptCount] = useState(0);
+
+  const MAX_ATTEMPTS = 3; // Número máximo de tentativas
 
   const scheduleDailyNotification = async () => {
     await Notifications.scheduleNotificationAsync({
@@ -29,7 +33,7 @@ export default function LearnScreen() {
         body: "Don't forget to check out your new word of the day!",
       },
       trigger: {
-        hour: 9,
+        hour: 7,
         minute: 0,
         repeats: true,
       },
@@ -53,8 +57,47 @@ export default function LearnScreen() {
       const translatedText = await sendWordToGemini(word);
       return translatedText || "Tradução indisponível";
     } catch (error) {
-      console.error("Erro na tradução:", error);
-      return "Erro na tradução";
+      console.error("Sem tradução disponível:", error);
+      return "Sem tradução disponível";
+    }
+  };
+
+  const fetchWord = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const data = await fetchRandomWord();
+      console.log("Dados recebidos da API:", data);
+
+      const wordDetail =
+        data && Array.isArray(data) && data.length > 0 ? data[0] : null;
+
+      // Sempre salvar a palavra, independentemente de haver definição
+      if (wordDetail && wordDetail.word) {
+        await saveWord(wordDetail.word);
+        setWordData(data);
+        setDefinition(wordDetail);
+        const translation = await translateWord(wordDetail.word);
+        setTranslatedWord(translation);
+        setAttemptCount(0); // Resetar contagem ao encontrar uma palavra válida
+      } else {
+        console.log("Palavra não encontrada ou estrutura de dados inesperada.");
+        setError("Palavra não encontrada. Buscando outra palavra...");
+
+        if (attemptCount < MAX_ATTEMPTS) {
+          setAttemptCount(attemptCount + 1); // Incrementar contador de tentativas
+          fetchWord(); // Tentar buscar outra palavra
+        } else {
+          setLoading(false); // Parar de tentar após atingir o limite
+          setError("Muitas tentativas. Tente novamente mais tarde.");
+        }
+      }
+    } catch (err) {
+      console.error("Erro ao buscar a palavra:", err);
+      setError("Falha ao buscar a palavra: " + err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,40 +115,6 @@ export default function LearnScreen() {
       await scheduleDailyNotification();
     };
 
-    const fetchWord = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const data = await fetchRandomWord();
-        console.log("Dados recebidos da API:", data);
-
-        if (data && Array.isArray(data) && data.length > 0) {
-          const wordDetail = data[0];
-
-          if (wordDetail.word && wordDetail.phonetics) {
-            setWordData(data);
-            setDefinition(wordDetail);
-            await saveWord(wordDetail.word);
-            const translation = await translateWord(wordDetail.word);
-            setTranslatedWord(translation);
-          } else {
-            console.warn("Estrutura de dados inesperada:", wordDetail);
-            throw new Error("Word data is unavailable");
-          }
-        } else {
-          console.warn("Resposta da API não contém dados válidos:", data);
-          throw new Error("Word data is unavailable");
-        }
-
-        await scheduleDailyNotification();
-      } catch (err) {
-        console.error("Erro ao buscar a palavra:", err);
-        setError("Failed to fetch the word: " + err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
     requestNotificationPermission();
     fetchWord();
 
@@ -129,7 +138,6 @@ export default function LearnScreen() {
             uri: audioUrl,
           });
           setSound(newSound);
-
           await newSound.playAsync();
         } catch (error) {
           console.error("Erro ao reproduzir o áudio:", error);
@@ -143,7 +151,9 @@ export default function LearnScreen() {
   };
 
   if (loading) return <ActivityIndicator size="large" color="#3BB3BD" />;
-  if (error) return <Text style={styles.errorText}>{error}</Text>;
+  // Não renderizar o erro se houv
+  if (error && attemptCount >= MAX_ATTEMPTS)
+    return <Text style={styles.errorText}>{error}</Text>;
 
   return (
     <View style={styles.container}>
@@ -177,26 +187,7 @@ export default function LearnScreen() {
               <Text style={styles.textTranslation}>{translatedWord}</Text>
             </View>
 
-            <Text style={styles.origin}>{definition.origin || ""}</Text>
-
-            {definition.meanings &&
-              definition.meanings.map((meaning, index) => (
-                <View key={index} style={styles.meaningContainer}>
-                  <Text style={styles.partOfSpeech}>
-                    {meaning.partOfSpeech}
-                  </Text>
-                  {meaning.definitions.map((def, i) => (
-                    <View key={i} style={styles.definitionContainer}>
-                      <Text style={styles.definition}>{def.definition}</Text>
-                      {def.example && (
-                        <Text style={styles.example}>
-                          Example: {def.example}
-                        </Text>
-                      )}
-                    </View>
-                  ))}
-                </View>
-              ))}
+            <GeminiDefinition word={definition.word} />
           </>
         )}
       </ScrollView>

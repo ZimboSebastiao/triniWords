@@ -71,7 +71,7 @@ export default function TabNavigator() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Chatbot"
         component={Chatbot}
         options={{
@@ -79,7 +79,7 @@ export default function TabNavigator() {
             <MaterialCommunityIcons name="chat" color={color} size={35} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}

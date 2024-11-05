@@ -63,7 +63,7 @@ export const sendMessageToChatGemini = async (message, retries = 3) => {
       if (error.response && error.response.status === 429) {
         retries--;
         const waitTime = 2000 * (3 - retries);
-        console.warn(
+        console.log(
           `Request limit exceeded. Trying again in ${
             waitTime / 1000
           } seconds...`

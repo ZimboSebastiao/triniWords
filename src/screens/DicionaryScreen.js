@@ -62,36 +62,40 @@ export default function DicionaryScreen() {
         />
       </View>
       <Text style={styles.title}>All Words</Text>
-      <FlatList
-        data={learnedWords}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <Pressable
-            onPress={() => handleSearch(item.word || item)}
-            style={({ pressed }) => [
-              {
-                padding: 10,
-                backgroundColor: pressed ? "#3BB3BD" : "#fff",
-                marginVertical: 5,
-                borderRadius: 5,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: 18,
-                margin: 3,
-              },
-            ]}
-          >
-            <Text style={styles.wordText}>{item.word || item}</Text>
-            <MaterialCommunityIcons
-              name="chevron-right"
-              color="#b1b4b5"
-              size={35}
-            />
-          </Pressable>
-        )}
-        contentContainerStyle={styles.viewAll}
-      />
+      {learnedWords.length === 0 ? (
+        <Text style={styles.noHistoryText}>No words have been added yet</Text>
+      ) : (
+        <FlatList
+          data={learnedWords}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <Pressable
+              onPress={() => handleSearch(item.word || item)}
+              style={({ pressed }) => [
+                {
+                  padding: 10,
+                  backgroundColor: pressed ? "#3BB3BD" : "#fff",
+                  marginVertical: 5,
+                  borderRadius: 5,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: 18,
+                  margin: 3,
+                },
+              ]}
+            >
+              <Text style={styles.wordText}>{item.word || item}</Text>
+              <MaterialCommunityIcons
+                name="chevron-right"
+                color="#b1b4b5"
+                size={35}
+              />
+            </Pressable>
+          )}
+          contentContainerStyle={styles.viewAll}
+        />
+      )}
     </View>
   );
 }
@@ -130,5 +134,11 @@ const styles = StyleSheet.create({
 
   wordText: {
     fontSize: 18,
+  },
+  noHistoryText: {
+    fontSize: 18,
+    marginVertical: 20,
+    textAlign: "center",
+    color: "#777",
   },
 });

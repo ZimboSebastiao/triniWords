@@ -40,33 +40,37 @@ export default function SettingsScreen({ navigation }) {
       >
         Search History
       </Text>
-      <FlatList
-        data={searchHistory}
-        keyExtractor={(item) => item}
-        renderItem={({ item }) => (
-          <Pressable
-            onPress={() => handleSearch(item)}
-            style={({ pressed }) => [
-              {
-                padding: 10,
-                backgroundColor: pressed ? "#3BB3BD" : "#fff",
-                marginVertical: 5,
-                borderRadius: 8,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              },
-            ]}
-          >
-            <Text style={{ fontSize: 18 }}>{item}</Text>
-            <MaterialCommunityIcons
-              name="chevron-right"
-              color="#b1b4b5"
-              size={35}
-            />
-          </Pressable>
-        )}
-      />
+      {searchHistory.length === 0 ? (
+        <Text style={styles.noHistoryText}>History is empty</Text>
+      ) : (
+        <FlatList
+          data={searchHistory}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => (
+            <Pressable
+              onPress={() => handleSearch(item)}
+              style={({ pressed }) => [
+                {
+                  padding: 10,
+                  backgroundColor: pressed ? "#3BB3BD" : "#fff",
+                  marginVertical: 5,
+                  borderRadius: 8,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                },
+              ]}
+            >
+              <Text style={{ fontSize: 18 }}>{item}</Text>
+              <MaterialCommunityIcons
+                name="chevron-right"
+                color="#b1b4b5"
+                size={35}
+              />
+            </Pressable>
+          )}
+        />
+      )}
     </View>
   );
 }
@@ -85,5 +89,11 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Bold",
     marginBottom: 10,
     color: "#30333C",
+  },
+  noHistoryText: {
+    fontSize: 18,
+    marginVertical: 20,
+    textAlign: "center",
+    color: "#777", // Cor do texto "sem histórico"
   },
 });

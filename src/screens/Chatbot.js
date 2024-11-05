@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, LogBox } from "react-native";
 import React, { useState } from "react";
 import {
   GiftedChat,
@@ -8,6 +8,9 @@ import {
 } from "react-native-gifted-chat";
 import Icon from "react-native-vector-icons/Ionicons";
 import { sendMessageToChatGemini } from "../apis/gemini";
+
+// Ignora os avisos do React Native, se necessário
+LogBox.ignoreAllLogs(true);
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([]);
@@ -19,33 +22,50 @@ export default function Chatbot() {
     );
 
     const userMessage = newMessages[0].text;
-
     setIsTyping(true);
 
     try {
       const botResponse = await sendMessageToChatGemini(userMessage);
 
-      const botMessage = {
-        _id: Math.random().toString(),
-        text: botResponse,
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "AI Health",
-          avatar: require("../../assets/images/bot1.jpg"),
-        },
-      };
+      // Verifica se botResponse é um objeto e possui a propriedade candidates ou é uma string direta
+      if (
+        (typeof botResponse === "object" &&
+          botResponse.candidates &&
+          botResponse.candidates.length > 0) ||
+        typeof botResponse === "string"
+      ) {
+        const botMessageText =
+          typeof botResponse === "string"
+            ? botResponse
+            : botResponse.candidates[0].content.parts[0]?.text ||
+              "Desculpe, não consegui entender.";
 
-      setTimeout(() => {
-        setMessages((previousMessages) =>
-          GiftedChat.append(previousMessages, botMessage)
-        );
-        setIsTyping(false);
-      }, 2000);
+        const botMessage = {
+          _id: Math.random().toString(),
+          text: botMessageText,
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: "AI Health",
+          },
+        };
+
+        // Adiciona a resposta do bot após um delay
+        setTimeout(() => {
+          setMessages((previousMessages) =>
+            GiftedChat.append(previousMessages, botMessage)
+          );
+          setIsTyping(false);
+        }, 2000);
+      } else {
+        throw new Error("Formato da resposta inválido");
+      }
     } catch (error) {
+      console.error("Erro ao enviar mensagem:", error); // Logando erro
+
       const errorMessage = {
         _id: Math.random().toString(),
-        text: "Limite de requisições da API excedido. Tente novamente mais tarde.",
+        text: "Ocorreu um erro. Tente novamente mais tarde.",
         createdAt: new Date(),
         user: {
           _id: 2,
@@ -112,6 +132,7 @@ export default function Chatbot() {
         placeholder="How can I help you today?"
         placeholderTextColor="#5e5f61"
         isTyping={isTyping}
+        renderAvatar={renderAvatar}
       />
     </View>
   );
@@ -121,6 +142,7 @@ const styles = StyleSheet.create({
   chatContainer: {
     flex: 1,
     backgroundColor: "#EDEFF0",
+    justifyContent: "flex-end",
   },
   inputContainer: {
     backgroundColor: "transparent",
