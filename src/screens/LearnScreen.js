@@ -25,7 +25,7 @@ export default function LearnScreen() {
   const [definition, setDefinition] = useState(null);
   const [attemptCount, setAttemptCount] = useState(0);
 
-  const MAX_ATTEMPTS = 3; // Número máximo de tentativas
+  const MAX_ATTEMPTS = 6; // Número máximo de tentativas
 
   const scheduleDailyNotification = async () => {
     await Notifications.scheduleNotificationAsync({
@@ -143,17 +143,19 @@ export default function LearnScreen() {
         } catch (error) {
           console.error("Erro ao reproduzir o áudio:", error);
           // Fallback para usar o Speech.speak se houver erro ao reproduzir o áudio
-          Speech.speak(definition.word);
+          Speech.speak(definition.word, { language: "en" });
         }
       } else {
         console.log("URL do áudio não encontrado. Usando fallback de fala.");
-        Speech.speak(definition.word); // Fallback caso a URL do áudio não seja encontrada
+        Speech.speak(definition.word, { language: "en" }); // Fallback caso a URL do áudio não seja encontrada
       }
     } else {
       console.log(
         "Definição ou fonética não disponível. Usando fallback de fala."
       );
-      Speech.speak(definition?.word || "Palavra não disponível");
+      Speech.speak(definition?.word || "Palavra não disponível", {
+        language: "en",
+      });
     }
   };
 
