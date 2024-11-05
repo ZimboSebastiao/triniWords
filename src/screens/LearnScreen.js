@@ -11,6 +11,7 @@ import { fetchRandomWord } from "../apis/randomWordApi";
 import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Audio } from "expo-av";
+import * as Speech from "expo-speech";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { sendWordToGemini } from "../apis/geminiTrans";
 import GeminiDefinition from "../utils/renderGeminiDefinition ";
@@ -141,17 +142,22 @@ export default function LearnScreen() {
           await newSound.playAsync();
         } catch (error) {
           console.error("Erro ao reproduzir o áudio:", error);
+          // Fallback para usar o Speech.speak se houver erro ao reproduzir o áudio
+          Speech.speak(definition.word);
         }
       } else {
-        console.log("URL do áudio não encontrado.");
+        console.log("URL do áudio não encontrado. Usando fallback de fala.");
+        Speech.speak(definition.word); // Fallback caso a URL do áudio não seja encontrada
       }
     } else {
-      console.log("Definição ou fonética não disponível.");
+      console.log(
+        "Definição ou fonética não disponível. Usando fallback de fala."
+      );
+      Speech.speak(definition?.word || "Palavra não disponível");
     }
   };
 
   if (loading) return <ActivityIndicator size="large" color="#3BB3BD" />;
-  // Não renderizar o erro se houv
   if (error && attemptCount >= MAX_ATTEMPTS)
     return <Text style={styles.errorText}>{error}</Text>;
 

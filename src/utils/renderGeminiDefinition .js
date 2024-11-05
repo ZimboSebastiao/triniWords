@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { sendWordToGeminiDefin } from "../apis/geminiDefin";
 import Markdown from "react-native-markdown-display";
 
@@ -24,12 +24,11 @@ const GeminiDefinition = ({ word }) => {
     }
   }, [word]);
 
-  //   if (loading) return <Text>Carregando definição...</Text>;
-  if (!geminiDefinition) return <Text>Definição não disponível.</Text>;
+  if (loading) return <ActivityIndicator size="large" color="#3BB3BD" />;
+  //   if (!geminiDefinition) return <Text>Definição não disponível.</Text>;
 
   return (
     <View style={styles.definitionContainer}>
-      {/* <Text style={styles.definitionText}>{geminiDefinition}</Text> */}
       <Markdown style={styles.definitionText}>{geminiDefinition}</Markdown>
     </View>
   );
