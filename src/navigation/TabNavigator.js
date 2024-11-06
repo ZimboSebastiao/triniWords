@@ -22,7 +22,7 @@ export default function TabNavigator() {
           borderTopColor: "#EDEFF0",
           height: 55,
         },
-        tabBarActiveTintColor: "#3BB3BD",
+        tabBarActiveTintColor: "#38b6ff",
         tabBarInactiveTintColor: "#b1b4b5",
         tabBarShowLabel: false,
       }}
