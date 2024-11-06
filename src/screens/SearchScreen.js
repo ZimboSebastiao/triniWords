@@ -41,10 +41,10 @@ export default function SearchScreen({ route }) {
         if (Array.isArray(data) && data.length > 0) {
           setDefinition(data[0]);
         } else {
-          setError("Definição não encontrada");
+          setError("Sorry, the word was not found! 😢");
         }
       } catch (error) {
-        setError("Erro ao buscar definição da palavra");
+        setError("Sorry, the word was not found! 😢");
       } finally {
         setLoading(false);
       }
@@ -172,9 +172,9 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 18,
-    color: "red",
+    color: "#9e2325",
     textAlign: "center",
-    marginTop: 20,
+    marginTop: 80,
   },
   viewTitle: {
     flexDirection: "row",
