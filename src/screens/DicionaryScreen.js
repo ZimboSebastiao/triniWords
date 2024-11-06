@@ -44,7 +44,7 @@ export default function DicionaryScreen() {
             size={35}
           />
         </Pressable>
-        <Text style={styles.title}>Dictionary</Text>
+        <Text style={styles.title}>Vocabulary</Text>
         <MaterialCommunityIcons name="arm-flex" color="#38b6ff" size={35} />
       </View>
       <View style={styles.search}>
