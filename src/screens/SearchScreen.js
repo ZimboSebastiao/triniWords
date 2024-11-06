@@ -12,6 +12,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import { useSearchHistory } from "../context/SearchHistoryContext";
 import * as Speech from "expo-speech";
+import { Image } from "react-native";
 
 export default function SearchScreen({ route }) {
   const { word } = route.params;
@@ -41,10 +42,10 @@ export default function SearchScreen({ route }) {
         if (Array.isArray(data) && data.length > 0) {
           setDefinition(data[0]);
         } else {
-          setError("Sorry, the word was not found! 😢");
+          setError("Sorry, the word was not found!");
         }
       } catch (error) {
-        setError("Sorry, the word was not found! 😢");
+        setError("Sorry, the word was not found!");
       } finally {
         setLoading(false);
       }
@@ -81,7 +82,7 @@ export default function SearchScreen({ route }) {
   };
 
   if (loading) return <ActivityIndicator size="large" color="#38b6ff" />;
-  if (error) return <Text style={styles.errorText}>{error}</Text>;
+  if (error) return <View><Image style={styles.notfound}  source={require("../../assets/images/no-data.gif")}/><Text style={styles.errorText}>{error}</Text></View>;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -184,4 +185,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  notfound: {
+    width: 290,
+    height: 290
+  }
 });
