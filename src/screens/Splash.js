@@ -5,7 +5,7 @@ import { Video } from "expo-av";
 export default function Splash({ navigation }) {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate("Login");
+      navigation.navigate("Home");
     }, 20000);
     return () => clearTimeout(timer);
   }, []);
