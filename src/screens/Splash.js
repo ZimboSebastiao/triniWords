@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Video } from "expo-av";
-import { navigate } from "../utils/RootNavigation"; // Importe a função navigate
+import { navigate } from "../utils/RootNavigation";
 
 export default function Splash() {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("Home"); // Use a navegação programática
+      navigate("Home");
     }, 9000);
 
     return () => clearTimeout(timer);
