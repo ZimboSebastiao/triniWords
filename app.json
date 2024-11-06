@@ -1,8 +1,6 @@
 {
   "expo": {
-    "permissions": [
-      "NOTIFICATIONS"
-    ],
+    "permissions": ["NOTIFICATIONS"],
     "name": "Trini's Words",
     "slug": "trinis-words",
     "version": "1.0.0",
@@ -10,7 +8,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/icon.png",
+      "image": "./assets/videos/splash.mp4",
       "resizeMode": "contain",
       "backgroundColor": "#fff"
     },
@@ -26,19 +24,13 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#fff"
       },
-      "permissions": [
-        "RECEIVE_BOOT_COMPLETED",
-        "VIBRATE",
-        "WAKE_LOCK"
-      ],
+      "permissions": ["RECEIVE_BOOT_COMPLETED", "VIBRATE", "WAKE_LOCK"],
       "package": "com.triniswords.app"
     },
     "web": {
       "favicon": "./assets/logo.png"
     },
-    "plugins": [
-      "expo-font"
-    ],
+    "plugins": ["expo-font"],
     "extra": {
       "eas": {
         "projectId": "ce3f8b8c-7430-4691-9449-14ee3b523b48"

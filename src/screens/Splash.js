@@ -1,19 +1,21 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Video } from "expo-av";
+import { navigate } from "../utils/RootNavigation"; // Importe a função navigate
 
-export default function Splash({ navigation }) {
+export default function Splash() {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate("Home");
-    }, 20000);
+      navigate("Home"); // Use a navegação programática
+    }, 9000);
+
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <View style={styles.container}>
       <Video
-        source={require("../../assets/videos/splash.mov")}
+        source={require("../../assets/videos/splash.mp4")}
         shouldPlay
         isLooping
         resizeMode="contain"
