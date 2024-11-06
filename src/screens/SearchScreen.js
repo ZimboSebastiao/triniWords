@@ -11,6 +11,7 @@ import { fetchWordDefinition } from "../apis/dictionaryApi";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import { useSearchHistory } from "../context/SearchHistoryContext";
+import * as Speech from "expo-speech";
 
 export default function SearchScreen({ route }) {
   const { word } = route.params;
@@ -62,9 +63,19 @@ export default function SearchScreen({ route }) {
     if (definition && definition.phonetics) {
       const audioUrl = definition.phonetics.find((p) => p.audio)?.audio;
       if (audioUrl) {
-        const { sound } = await Audio.Sound.createAsync({ uri: audioUrl });
-        setSound(sound);
-        await sound.playAsync();
+        try {
+          const { sound } = await Audio.Sound.createAsync({ uri: audioUrl });
+          setSound(sound);
+          await sound.playAsync();
+        } catch (error) {
+          console.error("Erro ao reproduzir o áudio:", error);
+        }
+      } else {
+        if (definition.word) {
+          Speech.speak(definition.word, {
+            language: "en",
+          });
+        }
       }
     }
   };

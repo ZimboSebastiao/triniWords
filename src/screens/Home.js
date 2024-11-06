@@ -140,7 +140,7 @@ export default function Home() {
                       }}
                       variant="bodyMedium"
                     >
-                      Conversation
+                      Training
                     </Text>
                     <ProgressBar
                       progress={0.7}
