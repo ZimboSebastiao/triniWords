@@ -185,10 +185,11 @@ const styles = StyleSheet.create({
     padding: 25,
   },
   searchbar: {
-    backgroundColor: "#fff",
+    backgroundColor: "#ededed",
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: "#fff",
+    borderColor: "#ededed",
+    elevation: 2
   },
   input: {
     fontSize: 16,

@@ -74,7 +74,7 @@ export default function DicionaryScreen() {
               style={({ pressed }) => [
                 {
                   padding: 10,
-                  backgroundColor: pressed ? "#38b6ff" : "#fff",
+                  backgroundColor: pressed ? "#38b6ff" : "#ededed",
                   marginVertical: 5,
                   borderRadius: 5,
                   flexDirection: "row",
@@ -122,10 +122,10 @@ const styles = StyleSheet.create({
     marginVertical: 28,
   },
   searchbar: {
-    backgroundColor: "#fff",
+    backgroundColor: "#ededed",
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: "#fff",
+    borderColor: "#ededed",
   },
   input: {
     fontSize: 16,
