@@ -14,7 +14,7 @@ export default function SettingsScreen({ navigation }) {
     <View
       style={{
         flex: 1,
-        backgroundColor: "#EDEFF0",
+        backgroundColor: "#fff",
         padding: 20,
         paddingTop: 50,
       }}

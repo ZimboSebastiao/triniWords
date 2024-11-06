@@ -18,8 +18,8 @@ export default function TabNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#EDEFF0",
-          borderTopColor: "#EDEFF0",
+          backgroundColor: "#fff",
+          borderTopColor: "#fff",
           height: 55,
         },
         tabBarActiveTintColor: "#38b6ff",

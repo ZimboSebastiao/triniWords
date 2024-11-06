@@ -82,9 +82,27 @@ export default function SearchScreen({ route }) {
   };
 
   if (loading) return <ActivityIndicator size="large" color="#38b6ff" />;
-  if (error) return <View><Image style={styles.notfound}  source={require("../../assets/images/no-data.gif")}/><Text style={styles.errorText}>{error}</Text></View>;
+  if (error)
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#fff", // Define o fundo como vermelho
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Image
+        style={styles.notfound}
+        source={require("../../assets/images/no-data.gif")}
+      />
+      <Text style={styles.errorText}>{error}</Text>
+    </View>
+  );
 
   return (
+
+
     <ScrollView contentContainerStyle={styles.container}>
       {definition && (
         <>
@@ -129,6 +147,7 @@ export default function SearchScreen({ route }) {
         </>
       )}
     </ScrollView>
+    
   );
 }
 
@@ -136,6 +155,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     padding: 35,
+    backgroundColor: "#fff"
   },
   wordTitle: {
     fontSize: 44,
@@ -173,9 +193,8 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 18,
-    color: "#9e2325",
+    color: "#e62023",
     textAlign: "center",
-    marginTop: 80,
   },
   viewTitle: {
     flexDirection: "row",

@@ -141,7 +141,7 @@ export default function Chatbot() {
 const styles = StyleSheet.create({
   chatContainer: {
     flex: 1,
-    backgroundColor: "#EDEFF0",
+    backgroundColor: "#fff",
     justifyContent: "flex-end",
   },
   inputContainer: {

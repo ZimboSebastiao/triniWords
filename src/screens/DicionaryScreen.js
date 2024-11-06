@@ -103,7 +103,7 @@ export default function DicionaryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EDEFF0",
+    backgroundColor: "#fff",
     padding: 20,
     paddingTop: 50,
   },

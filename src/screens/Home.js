@@ -161,7 +161,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EDEFF0",
+    backgroundColor: "#fff",
   },
   saudacao: {
     marginVertical: 60,
