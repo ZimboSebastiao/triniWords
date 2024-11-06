@@ -8,10 +8,13 @@ import DicionaryScreen from "../screens/DicionaryScreen";
 import Chatbot from "../screens/Chatbot";
 import SettingsScreen from "../screens/SettingsScreen";
 import LearnScreen from "../screens/LearnScreen";
+import Splash from "./src/screens/Splash";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
+  const [showSplash, setShowSplash] = useState(true);
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
