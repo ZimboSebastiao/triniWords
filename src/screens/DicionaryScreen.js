@@ -40,20 +40,20 @@ export default function DicionaryScreen() {
         <Pressable onPress={() => navigation.navigate("Home")}>
           <MaterialCommunityIcons
             name="arrow-left-thin"
-            color="#3BB3BD"
+            color="#38b6ff"
             size={35}
           />
         </Pressable>
         <Text style={styles.title}>Dictionary</Text>
-        <MaterialCommunityIcons name="arm-flex" color="#3BB3BD" size={35} />
+        <MaterialCommunityIcons name="arm-flex" color="#38b6ff" size={35} />
       </View>
       <View style={styles.search}>
         <Searchbar
           placeholder="Looking for..."
           placeholderTextColor="#b1b4b5"
-          iconColor="#3BB3BD"
+          iconColor="#38b6ff"
           clearIcon="close"
-          clearIconColor="#3BB3BD"
+          clearIconColor="#38b6ff"
           style={styles.searchbar}
           inputStyle={styles.input}
           onChangeText={setSearchQuery}
@@ -74,7 +74,7 @@ export default function DicionaryScreen() {
               style={({ pressed }) => [
                 {
                   padding: 10,
-                  backgroundColor: pressed ? "#3BB3BD" : "#fff",
+                  backgroundColor: pressed ? "#38b6ff" : "#fff",
                   marginVertical: 5,
                   borderRadius: 5,
                   flexDirection: "row",

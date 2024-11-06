@@ -80,7 +80,7 @@ export default function SearchScreen({ route }) {
     }
   };
 
-  if (loading) return <ActivityIndicator size="large" color="#3BB3BD" />;
+  if (loading) return <ActivityIndicator size="large" color="#38b6ff" />;
   if (error) return <Text style={styles.errorText}>{error}</Text>;
 
   return (
@@ -103,7 +103,7 @@ export default function SearchScreen({ route }) {
             <Pressable onPress={playAudio}>
               <MaterialCommunityIcons
                 name="volume-high"
-                color="#3BB3BD"
+                color="#38b6ff"
                 size={30}
                 style={{ padding: 5 }}
               />
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   },
   example: {
     fontSize: 16,
-    color: "#3BB3BD",
+    color: "#38b6ff",
     marginTop: 5,
   },
   errorText: {

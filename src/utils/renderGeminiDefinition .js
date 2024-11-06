@@ -24,7 +24,7 @@ const GeminiDefinition = ({ word }) => {
     }
   }, [word]);
 
-  if (loading) return <ActivityIndicator size="large" color="#3BB3BD" />;
+  if (loading) return <ActivityIndicator size="large" color="#38b6ff" />;
   //   if (!geminiDefinition) return <Text>Definição não disponível.</Text>;
 
   return (

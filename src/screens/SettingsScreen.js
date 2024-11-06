@@ -23,12 +23,12 @@ export default function SettingsScreen({ navigation }) {
         <Pressable onPress={() => navigation.navigate("Home")}>
           <MaterialCommunityIcons
             name="arrow-left-thin"
-            color="#3BB3BD"
+            color="#38b6ff"
             size={35}
           />
         </Pressable>
         <Text style={styles.title}>Historic</Text>
-        <MaterialCommunityIcons name="arm-flex" color="#3BB3BD" size={35} />
+        <MaterialCommunityIcons name="arm-flex" color="#38b6ff" size={35} />
       </View>
       <Text
         style={{
@@ -52,7 +52,7 @@ export default function SettingsScreen({ navigation }) {
               style={({ pressed }) => [
                 {
                   padding: 10,
-                  backgroundColor: pressed ? "#3BB3BD" : "#fff",
+                  backgroundColor: pressed ? "#38b6ff" : "#fff",
                   marginVertical: 5,
                   borderRadius: 8,
                   flexDirection: "row",

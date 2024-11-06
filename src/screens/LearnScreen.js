@@ -159,7 +159,7 @@ export default function LearnScreen() {
     }
   };
 
-  if (loading) return <ActivityIndicator size="large" color="#3BB3BD" />;
+  if (loading) return <ActivityIndicator size="large" color="#38b6ff" />;
   if (error && attemptCount >= MAX_ATTEMPTS)
     return <Text style={styles.errorText}>{error}</Text>;
 
@@ -185,7 +185,7 @@ export default function LearnScreen() {
               <Pressable onPress={playAudio}>
                 <MaterialCommunityIcons
                   name="volume-high"
-                  color="#3BB3BD"
+                  color="#38b6ff"
                   size={30}
                   style={{ padding: 5 }}
                 />

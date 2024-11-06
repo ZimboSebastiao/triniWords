@@ -33,9 +33,9 @@ export default function Home() {
         <Searchbar
           placeholder="Looking for..."
           placeholderTextColor="#b1b4b5"
-          iconColor="#3BB3BD"
+          iconColor="#38b6ff"
           clearIcon="close"
-          clearIconColor="#3BB3BD"
+          clearIconColor="#38b6ff"
           style={styles.searchbar}
           inputStyle={styles.input}
           onChangeText={setSearchQuery}
@@ -62,7 +62,7 @@ export default function Home() {
                 />
                 <Card.Content style={{ padding: 10 }}>
                   <Text
-                    style={{ color: "#3BB3BD", fontWeight: "bold", padding: 4 }}
+                    style={{ color: "#38b6ff", fontWeight: "bold", padding: 4 }}
                     variant="titleLarge"
                   >
                     Learn
@@ -91,7 +91,7 @@ export default function Home() {
                     </Text>
                     <ProgressBar
                       progress={0.5}
-                      color="#3BB3BD"
+                      color="#38b6ff"
                       style={{ width: 40, height: 8, borderRadius: 20 }}
                       variant="bodyMedium"
                     />
@@ -115,7 +115,7 @@ export default function Home() {
                 />
                 <Card.Content style={{ padding: 10 }}>
                   <Text
-                    style={{ color: "#3BB3BD", fontWeight: "bold", padding: 4 }}
+                    style={{ color: "#38b6ff", fontWeight: "bold", padding: 4 }}
                     variant="titleLarge"
                   >
                     Training
@@ -144,7 +144,7 @@ export default function Home() {
                     </Text>
                     <ProgressBar
                       progress={0.7}
-                      color="#3BB3BD"
+                      color="#38b6ff"
                       style={{ width: 40, height: 8, borderRadius: 20 }}
                       variant="bodyMedium"
                     />
