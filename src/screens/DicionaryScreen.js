@@ -5,6 +5,7 @@ import {
   ScrollView,
   Pressable,
   FlatList,
+  Image,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -63,7 +64,19 @@ export default function DicionaryScreen() {
       </View>
       <Text style={styles.title}>All Words</Text>
       {learnedWords.length === 0 ? (
-        <Text style={styles.noHistoryText}>No words have been added yet</Text>
+        <View
+          style={{
+            backgroundColor: "#fff", // Define o fundo como vermelho
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.noHistoryText}>No words have been added yet</Text>
+          <Image
+            style={styles.noWord}
+            source={require("../../assets/images/question.png")}
+          />
+        </View>
       ) : (
         <FlatList
           data={learnedWords}
@@ -140,5 +153,9 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     textAlign: "center",
     color: "#777",
+  },
+  noWord: {
+    width: 290,
+    height: 290,
   },
 });

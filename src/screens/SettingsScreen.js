@@ -48,7 +48,13 @@ export default function SettingsScreen({ navigation }) {
         Search History
       </Text>
       {searchHistory.length === 0 ? (
-        <View>
+        <View
+          style={{
+            backgroundColor: "#fff",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Text style={styles.noHistoryText}>History is empty</Text>
           <Image
             style={styles.noData}
@@ -108,5 +114,9 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     textAlign: "center",
     color: "#777",
+  },
+  noData: {
+    width: 290,
+    height: 290,
   },
 });
