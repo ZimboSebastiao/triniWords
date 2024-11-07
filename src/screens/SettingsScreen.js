@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { View, Text, Pressable, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  FlatList,
+  StyleSheet,
+  Image,
+} from "react-native";
 import { useSearchHistory } from "../context/SearchHistoryContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -41,7 +48,13 @@ export default function SettingsScreen({ navigation }) {
         Search History
       </Text>
       {searchHistory.length === 0 ? (
-        <Text style={styles.noHistoryText}>History is empty</Text>
+        <View>
+          <Text style={styles.noHistoryText}>History is empty</Text>
+          <Image
+            style={styles.noData}
+            source={require("../../assets/images/man.png")}
+          />
+        </View>
       ) : (
         <FlatList
           data={searchHistory}
@@ -94,6 +107,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginVertical: 20,
     textAlign: "center",
-    color: "#777", // Cor do texto "sem histórico"
+    color: "#777",
   },
 });
