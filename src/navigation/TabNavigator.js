@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Home from "../screens/Home";
 import SearchScreen from "../screens/SearchScreen";
 import DicionaryScreen from "../screens/DicionaryScreen";
-import Chatbot from "../screens/Chatbot";
 import SettingsScreen from "../screens/SettingsScreen";
 import LearnScreen from "../screens/LearnScreen";
 
@@ -71,15 +70,6 @@ export default function TabNavigator() {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="Chatbot"
-        component={Chatbot}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="chat" color={color} size={35} />
-          ),
-        }}
-      /> */}
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
