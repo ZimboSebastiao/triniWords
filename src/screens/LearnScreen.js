@@ -25,7 +25,7 @@ export default function LearnScreen() {
   const [definition, setDefinition] = useState(null);
   const [attemptCount, setAttemptCount] = useState(0);
 
-  const MAX_ATTEMPTS = 6;
+  const MAX_ATTEMPTS = 3;
 
   const scheduleDailyNotification = async () => {
     await Notifications.scheduleNotificationAsync({
@@ -207,6 +207,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#fff",
   },
   scrollContainer: {
     padding: 16,

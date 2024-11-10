@@ -30,7 +30,18 @@
     "web": {
       "favicon": "./assets/logo.png"
     },
-    "plugins": ["expo-font"],
+    "plugins": [
+      "expo-font",
+      "expo-router",
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "trinis-words",
+          "project": "Trini's Words",
+          "url": "https://sentry.io/"
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "ce3f8b8c-7430-4691-9449-14ee3b523b48"

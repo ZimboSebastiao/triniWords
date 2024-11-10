@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_KEY } from "@env";
+import * as Sentry from "@sentry/react-native";
 
 // Função de espera
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -7,6 +8,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 export const sendWordToGeminiDefin = async (word, retries = 3) => {
   while (retries > 0) {
     try {
+      // Enviando requisição para Gemini API
       const response = await axios.post(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
         {
@@ -14,28 +16,42 @@ export const sendWordToGeminiDefin = async (word, retries = 3) => {
             {
               parts: [
                 {
-                  text: ` Você é um professor de inglês altamente qualificado, especializado em ensinar falantes de português. Sua tarefa é receber uma palavra e criar uma aula completa e envolvente sobre ela, cobrindo os seguintes pontos:
+                  text: `Você é um professor de inglês altamente qualificado, especializado em ensinar falantes de português. Sua tarefa é receber uma palavra e criar uma aula completa e envolvente sobre ela, cobrindo os seguintes pontos:
 
-                    1. **Significado em português**: Explique o significado da palavra em português de forma clara e objetiva.
+                  1. Significado em português: Explique o significado da palavra de forma clara e objetiva, considerando diferentes nuances e usos.
 
-                    2. **Pronúncia em inglês**: Ofereça uma dica prática de pronúncia para que o aluno possa treinar corretamente.
+                  2. Pronúncia em inglês: Forneça uma dica prática de pronúncia, com uma transcrição fonética e sugestões para treinar a pronúncia corretamente.
+                  Se a palavra tiver sons difíceis ou típicos do inglês, forneça explicações detalhadas para facilitar o aprendizado.
 
-                    3. **Uso em frases**:
-                      - Exemplos de uso da palavra em frases completas no passado, presente e futuro, acompanhados de suas traduções para o português.
-                      - Contextos diferentes (formal, informal, profissional, cotidiano).
+                  3. Uso em frases: Exemplos de uso da palavra em frases completas nos seguintes tempos verbais: presente, passado, futuro, presente perfeito, passado perfeito, futuro perfeito e condicional.
+                  Acompanhe cada exemplo com suas traduções para o português e explique brevemente o significado no contexto de cada frase.
+                  Ofereça frases nos contextos formal, informal, profissional e cotidiano, mostrando a flexibilidade e aplicabilidade da palavra em diferentes situações.
 
-                    4. **Dicas gramaticais**:
-                      - Explique em que contextos a palavra pode ser usada (por exemplo, substantivo, verbo, adjetivo, etc.).
-                      - Regras importantes associadas à palavra (por exemplo, formas irregulares, conjugações, preposições associadas, etc.).
+                  
+                  4. Dicas gramaticais:                   Explique os diferentes contextos em que a palavra pode ser usada (por exemplo, substantivo, verbo, adjetivo, advérbio, etc.), com exemplos práticos.
+                  Se a palavra for irregular ou tiver formas alternativas (como verbos irregulares, plurais irregulares, adjetivos com formas comparativas e superlativas), forneça uma explicação detalhada.
+                  Identifique e explique preposições ou frases prepositivas comumente associadas à palavra, quando aplicável.
+                  Mostre variações no uso entre inglês britânico e inglês americano, se for relevante.
 
-                    5. **Dicas culturais**:
-                      - Alguma curiosidade ou contexto cultural sobre o uso da palavra em países de língua inglesa, se aplicável.
 
-                    6. **Prática adicional**:
-                      - Sugira uma atividade prática para o aluno usar a palavra em frases próprias, de forma que ele se sinta confiante em aplicar o que aprendeu.
+                  5. Dicas culturais: Ofereça uma curiosidade ou contexto cultural sobre o uso da palavra em países de língua inglesa, como a diferença de significados ou conotações em diferentes países ou dialetos.
+                  Se a palavra estiver associada a expressões idiomáticas ou gírias, inclua explicações sobre essas expressões e seus significados.
 
-                    Certifique-se de que cada seção esteja claramente identificada e formatada com títulos em negrito e separada por quebras de linha. A palavra para a aula é: "${word}.
-                    `,
+                  
+                  6. Falsos cognatos e palavras similares: Informe sobre possíveis falsos cognatos ou palavras semelhantes em português que podem gerar confusão, destacando suas diferenças e dando exemplos de uso.
+
+                  
+                  7. Prática adicional: Sugira atividades práticas, como exercícios de completar frases, criar sentenças próprias ou transformar frases em diferentes tempos verbais.
+                  Ofereça questões para que o aluno escreva ou fale sobre a palavra, aplicando o que aprendeu de forma criativa.
+                  Proponha também um desafio de conversação, caso o aluno esteja em um nível intermediário ou avançado, incentivando o uso da palavra em um diálogo.
+
+                  
+                  Observação Importante:
+
+                  Ao criar suas aulas, evite se referir ao público de forma genérica, como "Olá a todos" ou "Olá, alunos". Prefira sempre o singular, tratando o aluno individualmente, como "Olá, aluno!" ou "Bem-vindo à aula de hoje!". Foque diretamente no conteúdo da aula e no aprendizado do aluno, sem alongar saudações.
+
+                  Estruture bem suas explicações, mantendo uma linha de raciocínio clara e objetiva. Use emojis quando apropriado para tornar a aula mais envolvente e visualmente interessante, mas sempre de forma comedida, sem exageros. Lembre-se de que o foco principal é a clareza e a eficiência no ensino.
+                  A palavra para a aula é: "${word}".`,
                 },
               ],
             },
@@ -57,36 +73,73 @@ export const sendWordToGeminiDefin = async (word, retries = 3) => {
           console.log("Tradução obtida:", translation);
           return translation;
         } else {
-          throw new Error("Conteúdo não encontrado.");
+          const noContentError = new Error("Conteúdo não encontrado.");
+          Sentry.captureException(noContentError);
+          throw noContentError;
         }
       } else {
-        throw new Error("Resposta da API inválida.");
+        const invalidResponseError = new Error("Resposta da API inválida.");
+        Sentry.captureException(invalidResponseError);
+        throw invalidResponseError;
       }
     } catch (error) {
-      console.error("Erro ao buscar a palavra:", error.message);
-      if (error.response && error.response.status === 429) {
-        retries--;
-        const waitTime = 2000 * (3 - retries);
-        console.log(
-          `Limite de requisições excedido. Tentando novamente em ${
-            waitTime / 1000
-          } segundos...`
-        );
-        await delay(waitTime);
-      } else if (error.response && error.response.status === 403) {
-        console.error(
-          "Cota insuficiente. Verifique seu plano e detalhes de faturamento."
-        );
-        return "Cota insuficiente. Verifique seu plano e detalhes de faturamento.";
+      // Captura de exceções no Sentry, incluindo detalhes
+      Sentry.captureException(error, {
+        contexts: {
+          requestDetails: {
+            word,
+            retriesLeft: retries,
+          },
+        },
+      });
+
+      console.error(
+        "Erro ao buscar a palavra:",
+        error.message || error.response?.data || error
+      );
+
+      if (error.response) {
+        const { status } = error.response;
+
+        if (status === 429) {
+          retries--;
+          const waitTime = 500 * (3 - retries);
+          console.log(
+            `Limite de requisições excedido. Tentando novamente em ${
+              waitTime / 1000
+            } segundos...`
+          );
+          await delay(waitTime);
+        } else if (status === 403) {
+          const quotaError = new Error(
+            "Cota insuficiente. Verifique seu plano e detalhes de faturamento."
+          );
+          Sentry.captureException(quotaError);
+          console.error(quotaError.message);
+          return quotaError.message;
+        } else {
+          const processingError = new Error(
+            "Erro ao processar a mensagem ou problema de limite."
+          );
+          Sentry.captureException(processingError);
+          console.error(
+            "Erro ao processar a mensagem:",
+            error.response?.data || error.message
+          );
+          throw processingError;
+        }
       } else {
-        console.error(
-          "Erro ao processar a mensagem:",
-          error.response ? error.response.data : error.message
-        );
-        throw new Error("Erro ao processar a mensagem ou problema de limite.");
+        const unknownError = new Error("Erro desconhecido.");
+        Sentry.captureException(unknownError);
+        console.error("Erro desconhecido:", error.message || error);
+        throw unknownError;
       }
     }
   }
 
-  return "Limite de tentativas atingido. Por favor, tente novamente mais tarde.";
+  const retryLimitError = new Error(
+    "Limite de tentativas atingido. Por favor, tente novamente mais tarde."
+  );
+  Sentry.captureException(retryLimitError);
+  return retryLimitError.message;
 };

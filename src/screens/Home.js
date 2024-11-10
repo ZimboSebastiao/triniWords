@@ -5,6 +5,7 @@ import {
   Pressable,
   Image,
   ScrollView,
+  Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Searchbar, Card, ProgressBar, MD3Colors } from "react-native-paper";
@@ -24,6 +25,12 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <View style={styles.saudacao}>
+        {/* <Button
+          title="Press me to throw an error"
+          onPress={() => {
+            throw new Error("Hello, Sentry!");
+          }}
+        /> */}
         <Text style={styles.title}>Hi There 👋</Text>
         <Text style={styles.subtitle}>
           What would you like to train today? Search below.
@@ -189,7 +196,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 2,
     borderColor: "#ededed",
-    elevation: 2
+    elevation: 2,
   },
   input: {
     fontSize: 16,
