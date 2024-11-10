@@ -2,13 +2,11 @@ import axios from "axios";
 import { API_KEY } from "@env";
 import * as Sentry from "@sentry/react-native";
 
-// Função de espera
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const sendWordToGeminiDefin = async (word, retries = 3) => {
   while (retries > 0) {
     try {
-      // Enviando requisição para Gemini API
       const response = await axios.post(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
         {
@@ -83,7 +81,6 @@ export const sendWordToGeminiDefin = async (word, retries = 3) => {
         throw invalidResponseError;
       }
     } catch (error) {
-      // Captura de exceções no Sentry, incluindo detalhes
       Sentry.captureException(error, {
         contexts: {
           requestDetails: {
