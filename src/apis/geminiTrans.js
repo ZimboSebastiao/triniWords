@@ -1,9 +1,8 @@
 // geminiTrans.js
 import axios from "axios";
 import { KEY_TRANS } from "@env";
-import * as Sentry from "@sentry/react-native"; // Importando o Sentry
+import * as Sentry from "@sentry/react-native";
 
-// Função de espera
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const sendWordToGemini = async (word, retries = 3) => {
@@ -54,17 +53,15 @@ export const sendWordToGemini = async (word, retries = 3) => {
 
       console.error("Erro ao buscar a palavra:", error.message);
 
-      // Verificação de erro de rede (timeout, DNS, etc.)
       if (!error.response) {
         console.error("Erro de rede ou falha na conexão:", error.message);
-        // Captura de erro de rede
+
         Sentry.captureMessage("Erro de rede ou falha na conexão", "error");
         return "Erro de rede ou falha na conexão. Por favor, tente novamente.";
       }
 
-      // Erros baseados no código de status HTTP
       switch (error.response.status) {
-        case 429: // Limite de requisições excedido
+        case 429:
           retries--;
           const waitTime = 2000 * (3 - retries);
           console.log(
@@ -75,11 +72,11 @@ export const sendWordToGemini = async (word, retries = 3) => {
           await delay(waitTime);
           break;
 
-        case 403: // Cota insuficiente
+        case 403:
           console.error(
             "Cota insuficiente. Verifique seu plano e detalhes de faturamento."
           );
-          // Captura de erro 403
+
           Sentry.captureMessage(
             "Cota insuficiente. Verifique seu plano e detalhes de faturamento",
             "error"
@@ -94,7 +91,7 @@ export const sendWordToGemini = async (word, retries = 3) => {
             `Erro no servidor: ${error.response.status}. Tentando novamente...`
           );
           retries--;
-          await delay(5000); // Espera 5 segundos e tenta novamente
+          await delay(5000);
           break;
 
         default:
@@ -102,7 +99,7 @@ export const sendWordToGemini = async (word, retries = 3) => {
             "Erro inesperado ao processar a mensagem:",
             error.response ? error.response.data : error.message
           );
-          // Captura de erro inesperado
+
           Sentry.captureMessage(
             `Erro inesperado: ${error.response?.status || error.message}`,
             "error"
