@@ -74,23 +74,22 @@ export default function LearnScreen() {
       const wordDetail =
         data && Array.isArray(data) && data.length > 0 ? data[0] : null;
 
-      // Sempre salvar a palavra, independentemente de haver definição
       if (wordDetail && wordDetail.word) {
         await saveWord(wordDetail.word);
         setWordData(data);
         setDefinition(wordDetail);
         const translation = await translateWord(wordDetail.word);
         setTranslatedWord(translation);
-        setAttemptCount(0); // Resetar contagem ao encontrar uma palavra válida
+        setAttemptCount(0);
       } else {
         console.log("Palavra não encontrada ou estrutura de dados inesperada.");
         setError("Palavra não encontrada. Buscando outra palavra...");
 
         if (attemptCount < MAX_ATTEMPTS) {
-          setAttemptCount(attemptCount + 1); // Incrementar contador de tentativas
-          fetchWord(); // Tentar buscar outra palavra
+          setAttemptCount(attemptCount + 1);
+          fetchWord();
         } else {
-          setLoading(false); // Parar de tentar após atingir o limite
+          setLoading(false);
           setError("Muitas tentativas. Tente novamente mais tarde.");
         }
       }
@@ -142,12 +141,12 @@ export default function LearnScreen() {
           await newSound.playAsync();
         } catch (error) {
           console.error("Erro ao reproduzir o áudio:", error);
-          // Fallback para usar o Speech.speak se houver erro ao reproduzir o áudio
+
           Speech.speak(definition.word, { language: "en" });
         }
       } else {
         console.log("URL do áudio não encontrado. Usando fallback de fala.");
-        Speech.speak(definition.word, { language: "en" }); // Fallback caso a URL do áudio não seja encontrada
+        Speech.speak(definition.word, { language: "en" });
       }
     } else {
       console.log(
