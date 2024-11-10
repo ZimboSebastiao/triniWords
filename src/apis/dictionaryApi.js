@@ -11,7 +11,6 @@ export const fetchWordDefinition = async (word, retryDelay = 2000) => {
     try {
       const response = await axios.get(`${BASE_URL}/${word}`);
 
-      // Verifica se a resposta está na estrutura esperada
       if (
         !response.data ||
         !Array.isArray(response.data) ||
@@ -25,12 +24,11 @@ export const fetchWordDefinition = async (word, retryDelay = 2000) => {
         });
         return {
           error: `Nenhuma definição encontrada para a palavra "${word}".`,
-        }; // Retorna um erro amigável, sem lançar exceção
+        };
       }
 
       return response.data;
     } catch (error) {
-      // Envia erro para o Sentry com informações de contexto
       Sentry.captureException(error, {
         contexts: {
           wordLookup: {
@@ -41,16 +39,14 @@ export const fetchWordDefinition = async (word, retryDelay = 2000) => {
         },
       });
 
-      // Erro 404: Palavra não encontrada
       if (error.response && error.response.status === 404) {
         const notFoundError = new Error(
           "Palavra não encontrada no dicionário."
         );
         Sentry.captureException(notFoundError);
-        return { error: "Palavra não encontrada no dicionário." }; // Retorna uma mensagem amigável
+        return { error: "Palavra não encontrada no dicionário." };
       }
 
-      // Erro 429: Limite de requisições excedido
       if (error.response && error.response.status === 429) {
         attempts++;
         console.log(
@@ -59,21 +55,19 @@ export const fetchWordDefinition = async (word, retryDelay = 2000) => {
           } segundos...`
         );
         await new Promise((resolve) => setTimeout(resolve, retryDelay));
-        retryDelay *= 2; // Aumenta o tempo de espera a cada nova tentativa (backoff exponencial)
+        retryDelay *= 2;
       } else {
-        // Erros genéricos de requisição
         const genericError = new Error(
           "Erro ao buscar definição da palavra. Tente novamente."
         );
         Sentry.captureException(genericError);
         return {
           error: "Erro ao buscar definição da palavra. Tente novamente.",
-        }; // Retorna uma mensagem amigável
+        };
       }
     }
   }
 
-  // Falha após várias tentativas
   const retryExceededError = new Error(
     "Erro ao buscar definição da palavra após várias tentativas. Tente novamente mais tarde."
   );
@@ -81,5 +75,5 @@ export const fetchWordDefinition = async (word, retryDelay = 2000) => {
   return {
     error:
       "Erro ao buscar definição da palavra após várias tentativas. Tente novamente mais tarde.",
-  }; // Retorna uma mensagem amigável
+  };
 };
