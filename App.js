@@ -10,7 +10,7 @@ import Splash from "./src/screens/Splash";
 
 Sentry.init({
   dsn: "https://1293a6dd809605d94b56b5859c9f63cb@o4508274834735104.ingest.de.sentry.io/4508274841485392",
-  debug: true, // Opcional para modo de desenvolvimento. Defina como false em produção.
+  // debug: true, // Opcional para modo de desenvolvimento. Defina como false em produção.
 });
 
 function MainApp() {
