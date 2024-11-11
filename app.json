@@ -40,7 +40,8 @@
           "project": "Trini's Words",
           "url": "https://sentry.io/"
         }
-      ]
+      ],
+      "expo-build-properties"
     ],
     "extra": {
       "eas": {
