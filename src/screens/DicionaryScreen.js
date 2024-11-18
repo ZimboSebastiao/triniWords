@@ -48,6 +48,7 @@ export default function DicionaryScreen() {
         <Text style={styles.title}>Vocabulary</Text>
         <MaterialCommunityIcons name="arm-flex" color="#38b6ff" size={35} />
       </View>
+      
       <View style={styles.search}>
         <Searchbar
           placeholder="Looking for..."
