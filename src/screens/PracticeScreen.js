@@ -6,10 +6,22 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function PracticeScreen() {
   const [word, setWord] = useState("");
 
-  // Função de áudio: fala a palavra corrigida
+  // Função para adicionar pausas entre as frases com base na pontuação
+  const processText = (text) => {
+    // Substitui pontuação por pausas (em milissegundos)
+    const processedText = text
+      .replace(/([.?!])\s*/g, "$1|")  // Adiciona "|" após ponto, interrogação ou exclamação
+      .replace(/,\s*/g, ",|")          // Adiciona uma pausa leve após vírgulas
+      .replace(/\|/g, ",");            // Substitui "|" por vírgulas para representarem a pausa
+    return processedText;
+  };
+
   const playAudio = () => {
-    Speech.speak(word, {
+    const processedText = processText(word); // Processa o texto para adicionar pausas
+    Speech.speak(processedText, {
       language: "en",
+      pitch: 1,  // Ajuste o tom da voz, se necessário
+      rate: 1,   // Ajuste a velocidade, 1 é normal
     });
   };
 
@@ -19,10 +31,10 @@ export default function PracticeScreen() {
         style={styles.input}
         placeholder="Write a sentence"
         value={word}
-        onChangeText={setWord} // Atualiza a palavra conforme o usuário digita
-        autoCorrect={true} 
-        autoCapitalize="none" 
-        
+        onChangeText={setWord}
+        autoCorrect={true}
+        autoCapitalize="none"
+        multiline={true} // Permite que o usuário escreva várias linhas
       />
       <Pressable onPress={playAudio} style={styles.button}>
         <MaterialCommunityIcons name="volume-high" size={30} color="#fff" />
@@ -49,7 +61,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     height: 150,
     textAlignVertical: "top",
-    
   },
   button: {
     flexDirection: "row",
