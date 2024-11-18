@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { fetchWordDefinition } from "../apis/dictionaryApi";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Audio } from "expo-video";
+import { Audio } from 'expo-av';
 import { useSearchHistory } from "../context/SearchHistoryContext";
 import * as Speech from "expo-speech";
 import { Image } from "react-native";
