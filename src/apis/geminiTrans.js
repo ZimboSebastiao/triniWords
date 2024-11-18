@@ -1,7 +1,7 @@
 // geminiTrans.js
 import axios from "axios";
 import { KEY_TRANS } from "@env";
-import * as Sentry from "@sentry/react-native";
+
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -48,15 +48,14 @@ export const sendWordToGemini = async (word, retries = 3) => {
         );
       }
     } catch (error) {
-      // Captura de erro no Sentry
-      Sentry.captureException(error);
+      
 
       console.error("Erro ao buscar a palavra:", error.message);
 
       if (!error.response) {
         console.error("Erro de rede ou falha na conexão:", error.message);
 
-        Sentry.captureMessage("Erro de rede ou falha na conexão", "error");
+      
         return "Erro de rede ou falha na conexão. Por favor, tente novamente.";
       }
 
@@ -77,10 +76,7 @@ export const sendWordToGemini = async (word, retries = 3) => {
             "Cota insuficiente. Verifique seu plano e detalhes de faturamento."
           );
 
-          Sentry.captureMessage(
-            "Cota insuficiente. Verifique seu plano e detalhes de faturamento",
-            "error"
-          );
+         
           return "Cota insuficiente. Verifique seu plano e detalhes de faturamento.";
 
         case 500: // Erro interno do servidor
@@ -100,10 +96,7 @@ export const sendWordToGemini = async (word, retries = 3) => {
             error.response ? error.response.data : error.message
           );
 
-          Sentry.captureMessage(
-            `Erro inesperado: ${error.response?.status || error.message}`,
-            "error"
-          );
+         
           throw new Error(
             `Erro inesperado ao processar a mensagem. Código: ${error.response.status}`
           );

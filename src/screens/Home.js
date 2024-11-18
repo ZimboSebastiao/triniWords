@@ -25,12 +25,6 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <View style={styles.saudacao}>
-        {/* <Button
-          title="Press me to throw an error"
-          onPress={() => {
-            throw new Error("Hello, Sentry!");
-          }}
-        /> */}
         <Text style={styles.title}>Hi There 👋</Text>
         <Text style={styles.subtitle}>
           What would you like to train today? Search below.

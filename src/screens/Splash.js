@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import { Video } from "expo-av";
+import { Video } from "expo-video";
 import { navigate } from "../utils/RootNavigation";
 
 export default function Splash() {

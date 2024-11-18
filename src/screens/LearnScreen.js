@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { fetchRandomWord } from "../apis/randomWordApi";
 import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Audio } from "expo-av";
+import { Audio } from "expo-video";
 import * as Speech from "expo-speech";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { sendWordToGemini } from "../apis/geminiTrans";

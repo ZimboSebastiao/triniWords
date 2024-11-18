@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_KEY } from "@env";
-import * as Sentry from "@sentry/react-native";
+
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -72,24 +72,16 @@ export const sendWordToGeminiDefin = async (word, retries = 3) => {
           return translation;
         } else {
           const noContentError = new Error("Conteúdo não encontrado.");
-          Sentry.captureException(noContentError);
+         
           throw noContentError;
         }
       } else {
         const invalidResponseError = new Error("Resposta da API inválida.");
-        Sentry.captureException(invalidResponseError);
+      
         throw invalidResponseError;
       }
     } catch (error) {
-      Sentry.captureException(error, {
-        contexts: {
-          requestDetails: {
-            word,
-            retriesLeft: retries,
-          },
-        },
-      });
-
+     
       console.error(
         "Erro ao buscar a palavra:",
         error.message || error.response?.data || error
@@ -111,14 +103,14 @@ export const sendWordToGeminiDefin = async (word, retries = 3) => {
           const quotaError = new Error(
             "Cota insuficiente. Verifique seu plano e detalhes de faturamento."
           );
-          Sentry.captureException(quotaError);
+        
           console.error(quotaError.message);
           return quotaError.message;
         } else {
           const processingError = new Error(
             "Erro ao processar a mensagem ou problema de limite."
           );
-          Sentry.captureException(processingError);
+      
           console.error(
             "Erro ao processar a mensagem:",
             error.response?.data || error.message
@@ -127,7 +119,7 @@ export const sendWordToGeminiDefin = async (word, retries = 3) => {
         }
       } else {
         const unknownError = new Error("Erro desconhecido.");
-        Sentry.captureException(unknownError);
+    
         console.error("Erro desconhecido:", error.message || error);
         throw unknownError;
       }
@@ -137,6 +129,6 @@ export const sendWordToGeminiDefin = async (word, retries = 3) => {
   const retryLimitError = new Error(
     "Limite de tentativas atingido. Por favor, tente novamente mais tarde."
   );
-  Sentry.captureException(retryLimitError);
+ 
   return retryLimitError.message;
 };

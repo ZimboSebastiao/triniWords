@@ -1,6 +1,9 @@
 {
   "expo": {
-    "permissions": ["NOTIFICATIONS"],
+    "permissions": [
+      "NOTIFICATIONS"
+    ],
+    "newArchEnabled": true,
     "name": "Trini's Words",
     "slug": "trinis-words",
     "version": "1.0.0",
@@ -24,7 +27,11 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#fff"
       },
-      "permissions": ["RECEIVE_BOOT_COMPLETED", "VIBRATE", "WAKE_LOCK"],
+      "permissions": [
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE",
+        "WAKE_LOCK"
+      ],
       "package": "com.triniswords.app"
     },
     "web": {
@@ -32,16 +39,8 @@
     },
     "plugins": [
       "expo-font",
-      "expo-router",
-      [
-        "@sentry/react-native/expo",
-        {
-          "organization": "trinis-words",
-          "project": "Trini's Words",
-          "url": "https://sentry.io/"
-        }
-      ],
-      "expo-build-properties"
+      "expo-build-properties",
+      "expo-video"
     ],
     "extra": {
       "eas": {
