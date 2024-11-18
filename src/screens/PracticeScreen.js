@@ -6,22 +6,22 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function PracticeScreen() {
   const [word, setWord] = useState("");
 
-  // Função para adicionar pausas entre as frases com base na pontuação
+  
   const processText = (text) => {
-    // Substitui pontuação por pausas (em milissegundos)
-    const processedText = text
-      .replace(/([.?!])\s*/g, "$1|")  // Adiciona "|" após ponto, interrogação ou exclamação
-      .replace(/,\s*/g, ",|")          // Adiciona uma pausa leve após vírgulas
-      .replace(/\|/g, ",");            // Substitui "|" por vírgulas para representarem a pausa
-    return processedText;
+   
+    return text
+      .replace(/([.?!])\s*/g, "$1|")  
+      .replace(/,\s*/g, ",|")           
+      .replace(/\|/g, ",");             
   };
 
   const playAudio = () => {
-    const processedText = processText(word); // Processa o texto para adicionar pausas
+    const processedText = processText(word); 
     Speech.speak(processedText, {
       language: "en",
-      pitch: 1,  // Ajuste o tom da voz, se necessário
-      rate: 1,   // Ajuste a velocidade, 1 é normal
+      pitch: 1.2,   
+      rate: 0.9,    
+      onDone: () => console.log("Finished speaking"),
     });
   };
 
@@ -34,7 +34,7 @@ export default function PracticeScreen() {
         onChangeText={setWord}
         autoCorrect={true}
         autoCapitalize="none"
-        multiline={true} // Permite que o usuário escreva várias linhas
+        multiline={true} 
       />
       <Pressable onPress={playAudio} style={styles.button}>
         <MaterialCommunityIcons name="volume-high" size={30} color="#fff" />
