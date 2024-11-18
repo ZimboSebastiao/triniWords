@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     height: 150,
     textAlignVertical: "top",
-    marginTop: 60
+    marginTop: 80
   },
   button: {
     flexDirection: "row",
