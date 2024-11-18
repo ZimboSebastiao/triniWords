@@ -103,7 +103,7 @@ export default function Home() {
 
             <Pressable
               style={[styles.learn, styles.spacing]}
-              onPress={() => navigation.navigate("DicionaryScreen")}
+              onPress={() => navigation.navigate("PracticeScreen")}
             >
               <Card style={{ width: 200, backgroundColor: "#fff" }}>
                 <Card.Cover

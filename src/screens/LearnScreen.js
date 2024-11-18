@@ -16,6 +16,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { sendWordToGemini } from "../apis/geminiTrans";
 import GeminiDefinition from "../utils/renderGeminiDefinition ";
 
+
+
 export default function LearnScreen() {
   const [wordData, setWordData] = useState(null);
   const [translatedWord, setTranslatedWord] = useState("");
@@ -38,7 +40,6 @@ export default function LearnScreen() {
         minute: 0,
         repeats: true,
       },
-      // trigger: null,
     });
   };
 
@@ -142,6 +143,7 @@ export default function LearnScreen() {
         } catch (error) {
           console.error("Erro ao reproduzir o áudio:", error);
 
+          // Usando fallback de fala caso o áudio não seja encontrado
           Speech.speak(definition.word, { language: "en" });
         }
       } else {
@@ -149,9 +151,7 @@ export default function LearnScreen() {
         Speech.speak(definition.word, { language: "en" });
       }
     } else {
-      console.log(
-        "Definição ou fonética não disponível. Usando fallback de fala."
-      );
+      console.log("Definição ou fonética não disponível. Usando fallback de fala.");
       Speech.speak(definition?.word || "Palavra não disponível", {
         language: "en",
       });
@@ -201,6 +201,7 @@ export default function LearnScreen() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -231,28 +232,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginVertical: 10,
   },
-  origin: {
-    fontSize: 16,
-    color: "#777",
-  },
-  meaningContainer: {
-    marginVertical: 10,
-  },
-  partOfSpeech: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  definitionContainer: {
-    marginLeft: 10,
-  },
-  definition: {
-    fontSize: 20,
-    marginVertical: 5,
-  },
-  example: {
-    fontSize: 16,
-    color: "#777",
-  },
   errorText: {
     color: "red",
     fontSize: 18,
@@ -264,8 +243,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   textTranslation: {
-    color: "#30333C",
-    fontWeight: "bold",
-    fontSize: 15,
+    color: "#2c3e50",
+    fontSize: 22,
   },
 });
