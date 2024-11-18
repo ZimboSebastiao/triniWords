@@ -8,6 +8,7 @@ import SearchScreen from "../screens/SearchScreen";
 import DicionaryScreen from "../screens/DicionaryScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import LearnScreen from "../screens/LearnScreen";
+import PracticeScreen from "../screens/PracticeScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -50,6 +51,17 @@ export default function TabNavigator() {
       <Tab.Screen
         name="LearnScreen"
         component={LearnScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="magnify" color={color} size={35} />
+          ),
+          tabBarButton: () => null,
+          tabBarStyle: { display: "none" },
+        }}
+      />
+      <Tab.Screen
+        name="PracticeScreen"
+        component={PracticeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="magnify" color={color} size={35} />
