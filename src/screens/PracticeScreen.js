@@ -17,15 +17,16 @@ export default function PracticeScreen() {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Digite uma palavra em inglês"
+        placeholder="Write a sentence"
         value={word}
         onChangeText={setWord} // Atualiza a palavra conforme o usuário digita
-        autoCorrect={true} // Habilita a autocorreção nativa
-        autoCapitalize="none" // Não faz autocapitalização
+        autoCorrect={true} 
+        autoCapitalize="none" 
+        
       />
       <Pressable onPress={playAudio} style={styles.button}>
         <MaterialCommunityIcons name="volume-high" size={30} color="#fff" />
-        <Text style={styles.buttonText}>Falar Palavra</Text>
+        <Text style={styles.buttonText}>Listen to sentence</Text>
       </Pressable>
     </View>
   );
@@ -33,6 +34,7 @@ export default function PracticeScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: "center",
     padding: 35,
     backgroundColor: "#fff",
@@ -45,6 +47,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 18,
     marginBottom: 20,
+    height: 150,
+    textAlignVertical: "top",
+    
   },
   button: {
     flexDirection: "row",
