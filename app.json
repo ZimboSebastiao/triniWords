@@ -40,7 +40,13 @@
     "plugins": [
       "expo-font",
       "expo-build-properties",
-      "expo-video"
+      [
+        "expo-video",
+        {
+          "supportsBackgroundPlayback": true,
+          "supportsPictureInPicture": true
+        }
+      ]
     ],
     "extra": {
       "eas": {

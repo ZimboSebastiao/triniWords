@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import { Video } from "expo-video";
+import { Video } from 'expo-video';
 import { navigate } from "../utils/RootNavigation";
 
 export default function Splash() {
@@ -15,7 +15,7 @@ export default function Splash() {
   return (
     <View style={styles.container}>
       <Video
-        source={require("../../assets/videos/splash.mp4")}
+        source={require('../../assets/videos/splash.mp4')}
         shouldPlay
         isLooping
         resizeMode="contain"
