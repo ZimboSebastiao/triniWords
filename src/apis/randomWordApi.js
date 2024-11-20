@@ -1,4 +1,4 @@
-const fetchFromAPI = async (url) => {
+const fetchFromAPI = async (url, retries = 3) => {
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -6,8 +6,13 @@ const fetchFromAPI = async (url) => {
     }
     return await response.json();
   } catch (error) {
-    console.error(`Erro ao acessar ${url}:`, error.message);
-    return null;
+    if (retries > 0) {
+      console.warn(`Erro ao acessar ${url}. Tentando novamente...`);
+      return fetchFromAPI(url, retries - 1); // Retry
+    } else {
+      console.error(`Erro ao acessar ${url}:`, error.message);
+      return null; // Retorna null caso não seja possível acessar após as tentativas
+    }
   }
 };
 
