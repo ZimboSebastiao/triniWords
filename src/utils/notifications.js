@@ -1,6 +1,5 @@
 import * as Notifications from "expo-notifications";
 
-// Função para pedir permissão de notificações
 export async function requestNotificationPermissions() {
   const { status } = await Notifications.getPermissionsAsync();
   if (status !== "granted") {
@@ -13,25 +12,22 @@ export async function requestNotificationPermissions() {
   return true;
 }
 
-// Função para agendar a notificação diária
 export async function scheduleDailyNotification() {
   const hasPermission = await requestNotificationPermissions();
   if (!hasPermission) return;
 
-  // Cancela notificações anteriores para evitar duplicações
   await Notifications.cancelAllScheduledNotificationsAsync();
 
-  // Agenda a notificação para às 8h diariamente
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "Good Morning! 🌞",
       body: "Let's learn a new word! 📚",
-      data: { screen: "LearnScreen" }, // Tela de destino ao clicar na notificação
+      data: { screen: "LearnScreen" },
     },
     trigger: {
-      hour: 8, // 8h da manhã
+      hour: 8,
       minute: 0,
-      repeats: true, // Repetir diariamente
+      repeats: true,
     },
   });
 

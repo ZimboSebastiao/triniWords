@@ -1,5 +1,0 @@
-azul = #38b6ff
-preto = #30333C
-laranja = #FCBE32
-cinza = #fff
-
