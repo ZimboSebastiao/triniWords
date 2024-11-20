@@ -9,6 +9,7 @@ import DicionaryScreen from "../screens/DicionaryScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import LearnScreen from "../screens/LearnScreen";
 import PracticeScreen from "../screens/PracticeScreen";
+import * as Notifications from "expo-notifications";
 
 const Tab = createBottomTabNavigator();
 
