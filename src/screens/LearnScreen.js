@@ -96,7 +96,7 @@ export default function LearnScreen() {
     const content = `
   📝 **Word:** ${definition?.word}
   
-  🌐 **Translation:** ${translation}
+  🌐 **Translation:** ${translatedWord}
   
   📖 **Definition:**
   ${definition?.meanings
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
   shareButton: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    left: 70,
+    left: 50,
     padding: 0,
     margin: 0,
     paddingVertical: 0,
