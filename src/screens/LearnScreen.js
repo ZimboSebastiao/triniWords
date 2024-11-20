@@ -44,7 +44,7 @@ export default function LearnScreen() {
       }
 
       setDefinition(wordDefinition[0]);
-      // Salvar a palavra no AsyncStorage
+
       saveWord(wordDefinition[0].word);
     } catch (error) {
       setError("Erro ao buscar a definição da palavra.");
