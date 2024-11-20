@@ -44,11 +44,15 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/notification-icon.png",
+          "icon": "./assets/logo.png",
           "color": "#ffffff"
         }
       ]
     ],
-    "extra": {}
+    "extra": {
+      "eas": {
+        "projectId": "462c3371-180c-4da8-8d4d-c36a10ed694d"
+      }
+    }
   }
 }
