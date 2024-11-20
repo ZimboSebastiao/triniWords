@@ -146,6 +146,20 @@ export default function SearchScreen({ route }) {
               size={35}
               style={{ padding: 30 }}
             />
+            <Pressable
+              onPress={handleShare}
+              style={({ pressed }) => [
+                styles.shareButton,
+                pressed && styles.pressed,
+              ]}
+            >
+              <MaterialCommunityIcons
+                name="share-variant"
+                color="#38b6ff"
+                size={35}
+                style={{ padding: 30 }}
+              />
+            </Pressable>
           </View>
           <View style={styles.translate}>
             {translation && (
@@ -183,9 +197,6 @@ export default function SearchScreen({ route }) {
                 ))}
               </View>
             ))}
-          <Pressable onPress={handleShare} style={styles.shareButton}>
-            <Text style={styles.shareButtonText}>Compartilhar</Text>
-          </Pressable>
         </>
       )}
     </ScrollView>
@@ -194,8 +205,10 @@ export default function SearchScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     padding: 35,
+    justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "#fff",
   },
   wordTitle: {
@@ -265,5 +278,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     width: "100%",
     alignItems: "flex-start",
+  },
+  shareButton: {
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    left: 60,
+    padding: 0,
+    margin: 0,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+  },
+  pressed: {
+    backgroundColor: "#38b6ff",
+    opacity: 0.2,
+    borderRadius: 50,
   },
 });
