@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { fetchWordDefinition } from "../apis/dictionaryApi";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Audio } from 'expo-av';
+import { Audio } from "expo-av";
 import { useSearchHistory } from "../context/SearchHistoryContext";
 import * as Speech from "expo-speech";
 import { Image } from "react-native";
@@ -204,5 +204,22 @@ const styles = StyleSheet.create({
   notfound: {
     width: 290,
     height: 290,
+  },
+  translationContainer: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 5,
+    width: "80%",
+  },
+  translationText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#38b6ff",
+  },
+  translate: {
+    justifyContent: "flex-start",
+    width: "100%",
+    alignItems: "flex-start",
   },
 });

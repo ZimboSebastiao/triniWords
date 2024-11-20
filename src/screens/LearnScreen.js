@@ -8,8 +8,6 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { fetchRandomWord } from "../apis/randomWordApi";
-import * as Notifications from "expo-notifications";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Audio } from "expo-av";
 import * as Speech from "expo-speech";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
