@@ -255,7 +255,6 @@ const styles = StyleSheet.create({
   shareButton: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
-
     padding: 0,
     margin: 0,
     paddingVertical: 0,
