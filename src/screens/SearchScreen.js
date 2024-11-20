@@ -6,15 +6,17 @@ import {
   StyleSheet,
   ScrollView,
   Pressable,
+  Button,
 } from "react-native";
-import { fetchWordDefinition } from "../apis/dictionaryApi";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
-import { useSearchHistory } from "../context/SearchHistoryContext";
 import * as Speech from "expo-speech";
 import { Image } from "react-native";
 
+import { fetchWordDefinition } from "../apis/dictionaryApi";
+import { useSearchHistory } from "../context/SearchHistoryContext";
 import { translateWord } from "../utils/translate";
+import { shareContent } from "../utils/shareUtils";
 
 export default function SearchScreen({ route }) {
   const { word } = route.params;
@@ -89,6 +91,27 @@ export default function SearchScreen({ route }) {
       }
     }
   };
+  const handleShare = () => {
+    const content = `
+  📝 **Word:** ${definition?.word}
+  
+  🌐 **Translation:** ${translation}
+  
+  📖 **Definition:**
+  ${definition?.meanings
+    ?.map((meaning, index) => {
+      const definitions = meaning.definitions
+        .map((def) => `- ${def.definition}`)
+        .join("\n");
+      return `${meaning.partOfSpeech}:\n${definitions}`;
+    })
+    .join("\n\n")}
+  
+  📅 **Origin:** ${definition?.origin || "Not available"}
+  `;
+
+    shareContent(content); // Chama a função para compartilhar
+  };
 
   if (loading) return <ActivityIndicator size="large" color="#38b6ff" />;
   if (error)
@@ -160,6 +183,9 @@ export default function SearchScreen({ route }) {
                 ))}
               </View>
             ))}
+          <Pressable onPress={handleShare} style={styles.shareButton}>
+            <Text style={styles.shareButtonText}>Compartilhar</Text>
+          </Pressable>
         </>
       )}
     </ScrollView>
