@@ -13,7 +13,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Audio } from "expo-av";
 import * as Speech from "expo-speech";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import { fetchWordDefinition } from "../apis/dictionaryApi";
+import { saveWord } from "../utils/wordStorage";
 
 export default function LearnScreen() {
   const [loading, setLoading] = useState(true);
@@ -42,6 +44,8 @@ export default function LearnScreen() {
       }
 
       setDefinition(wordDefinition[0]);
+      // Salvar a palavra no AsyncStorage
+      saveWord(wordDefinition[0].word);
     } catch (error) {
       setError("Erro ao buscar a definição da palavra.");
     } finally {
