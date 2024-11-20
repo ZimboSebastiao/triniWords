@@ -111,13 +111,15 @@ export default function LearnScreen() {
               style={{ padding: 30 }}
             />
           </View>
-          {translatedWord && (
-            <View style={styles.translationContainer}>
-              <Text style={styles.translationText}>
-                Tradução: {translatedWord}
-              </Text>
-            </View>
-          )}
+          <View style={styles.translate}>
+            {translatedWord && (
+              <View style={styles.translationContainer}>
+                <Text style={styles.translationText}>
+                  Tradução: {translatedWord}
+                </Text>
+              </View>
+            )}
+          </View>
           <View style={styles.viewPhonetic}>
             <Text style={styles.phonetic}>{definition.phonetic || " "}</Text>
             <Pressable onPress={playAudio}>
@@ -200,13 +202,19 @@ const styles = StyleSheet.create({
   },
   translationContainer: {
     marginTop: 20,
-    padding: 10,
+    padding: 15,
     backgroundColor: "#f0f0f0",
     borderRadius: 5,
+    width: "80%",
   },
   translationText: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#38b6ff",
+  },
+  translate: {
+    justifyContent: "flex-start",
+    width: "100%",
+    alignItems: "flex-start",
   },
 });
