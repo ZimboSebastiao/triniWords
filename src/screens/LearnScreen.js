@@ -15,6 +15,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { fetchWordDefinition } from "../apis/dictionaryApi";
 import { saveWord } from "../utils/wordStorage";
 import { translateWord } from "../utils/translate";
+import { shareContent } from "../utils/shareUtils";
 
 export default function LearnScreen() {
   const [loading, setLoading] = useState(true);
@@ -91,6 +92,28 @@ export default function LearnScreen() {
     }
   };
 
+  const handleShare = () => {
+    const content = `
+  📝 **Word:** ${definition?.word}
+  
+  🌐 **Translation:** ${translation}
+  
+  📖 **Definition:**
+  ${definition?.meanings
+    ?.map((meaning, index) => {
+      const definitions = meaning.definitions
+        .map((def) => `- ${def.definition}`)
+        .join("\n");
+      return `${meaning.partOfSpeech}:\n${definitions}`;
+    })
+    .join("\n\n")}
+  
+  📅 **Origin:** ${definition?.origin || "Not available"}
+  `;
+
+    shareContent(content); // Chama a função para compartilhar
+  };
+
   if (loading) return <ActivityIndicator size="large" color="#38b6ff" />;
   if (error) return <Text style={styles.errorText}>{error}</Text>;
 
@@ -108,6 +131,20 @@ export default function LearnScreen() {
               size={35}
               style={{ padding: 30 }}
             />
+            <Pressable
+              onPress={handleShare}
+              style={({ pressed }) => [
+                styles.shareButton,
+                pressed && styles.pressed,
+              ]}
+            >
+              <MaterialCommunityIcons
+                name="share-variant"
+                color="#38b6ff"
+                size={35}
+                style={{ padding: 10 }}
+              />
+            </Pressable>
           </View>
           <View style={styles.translate}>
             {translatedWord && (
@@ -214,5 +251,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     width: "100%",
     alignItems: "flex-start",
+  },
+  shareButton: {
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    left: 70,
+    padding: 0,
+    margin: 0,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+  },
+  pressed: {
+    backgroundColor: "#38b6ff",
+    opacity: 0.2,
+    borderRadius: 50,
   },
 });

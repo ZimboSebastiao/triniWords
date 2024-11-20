@@ -157,7 +157,7 @@ export default function SearchScreen({ route }) {
                 name="share-variant"
                 color="#38b6ff"
                 size={35}
-                style={{ padding: 30 }}
+                style={{ padding: 10 }}
               />
             </Pressable>
           </View>
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
   shareButton: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    left: 60,
+    left: 90,
     padding: 0,
     margin: 0,
     paddingVertical: 0,
