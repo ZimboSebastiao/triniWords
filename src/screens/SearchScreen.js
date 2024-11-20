@@ -14,6 +14,8 @@ import { useSearchHistory } from "../context/SearchHistoryContext";
 import * as Speech from "expo-speech";
 import { Image } from "react-native";
 
+import { translateWord } from "../utils/translate";
+
 export default function SearchScreen({ route }) {
   const { word } = route.params;
   const { addSearchTerm } = useSearchHistory();
@@ -22,6 +24,7 @@ export default function SearchScreen({ route }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sound, setSound] = useState(null);
+  const [translation, setTranslation] = useState(null);
 
   useEffect(() => {
     console.log("Parâmetros recebidos:", { word });
@@ -51,7 +54,13 @@ export default function SearchScreen({ route }) {
       }
     };
 
+    const getTranslation = async () => {
+      const translated = await translateWord(word); // Chamando a função de tradução
+      setTranslation(translated); // Armazenando a tradução
+    };
+
     getDefinition();
+    getTranslation();
 
     return () => {
       if (sound) {
@@ -114,6 +123,15 @@ export default function SearchScreen({ route }) {
               size={35}
               style={{ padding: 30 }}
             />
+          </View>
+          <View style={styles.translate}>
+            {translation && (
+              <View style={styles.translationContainer}>
+                <Text style={styles.translationText}>
+                  Tradução: {translation}
+                </Text>
+              </View>
+            )}
           </View>
           <View style={styles.viewPhonetic}>
             <Text style={styles.phonetic}>{definition.phonetic || ""}</Text>
@@ -210,7 +228,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: "#f0f0f0",
     borderRadius: 5,
-    width: "80%",
+    width: "100%",
   },
   translationText: {
     fontSize: 18,

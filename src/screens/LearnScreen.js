@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: "#f0f0f0",
     borderRadius: 5,
-    width: "80%",
+    width: "100%",
   },
   translationText: {
     fontSize: 18,
