@@ -16,12 +16,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { fetchWordDefinition } from "../apis/dictionaryApi";
 import { saveWord } from "../utils/wordStorage";
+import { translateWord } from "../utils/translate";
 
 export default function LearnScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sound, setSound] = useState(null);
   const [definition, setDefinition] = useState(null);
+  const [translatedWord, setTranslatedWord] = useState(null);
 
   const fetchRandomWordHandler = async () => {
     setLoading(true);
@@ -46,6 +48,10 @@ export default function LearnScreen() {
       setDefinition(wordDefinition[0]);
 
       saveWord(wordDefinition[0].word);
+
+      // Chama a função de tradução
+      const translated = await translateWord(wordDefinition[0].word);
+      setTranslatedWord(translated);
     } catch (error) {
       setError("Erro ao buscar a definição da palavra.");
     } finally {
@@ -105,6 +111,13 @@ export default function LearnScreen() {
               style={{ padding: 30 }}
             />
           </View>
+          {translatedWord && (
+            <View style={styles.translationContainer}>
+              <Text style={styles.translationText}>
+                Tradução: {translatedWord}
+              </Text>
+            </View>
+          )}
           <View style={styles.viewPhonetic}>
             <Text style={styles.phonetic}>{definition.phonetic || " "}</Text>
             <Pressable onPress={playAudio}>
@@ -184,5 +197,16 @@ const styles = StyleSheet.create({
   definitionText: {
     fontSize: 16,
     marginVertical: 5,
+  },
+  translationContainer: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 5,
+  },
+  translationText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#38b6ff",
   },
 });
