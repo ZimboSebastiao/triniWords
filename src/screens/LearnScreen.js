@@ -108,7 +108,7 @@ export default function LearnScreen() {
     })
     .join("\n\n")}
   
-  📅 **Origin:** ${definition?.origin || "Not available"}
+  📅 **Origin:** ${definition?.origin || "Date unavailable"}
   `;
 
     shareContent(content); // Chama a função para compartilhar
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
   shareButton: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    left: 50,
+
     padding: 0,
     margin: 0,
     paddingVertical: 0,
