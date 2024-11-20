@@ -141,7 +141,7 @@ export default function Home() {
                       }}
                       variant="bodyMedium"
                     >
-                      Training
+                      Train
                     </Text>
                     <ProgressBar
                       progress={0.7}
@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "red",
   },
   viewButtons: {
     flexDirection: "row",
