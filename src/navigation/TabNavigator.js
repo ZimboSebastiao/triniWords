@@ -27,6 +27,7 @@ export default function TabNavigator() {
         tabBarActiveTintColor: "#38b6ff",
         tabBarInactiveTintColor: "#b1b4b5",
         tabBarShowLabel: false,
+        cardStyle: { backgroundColor: "#fff" },
       }}
     >
       <Tab.Screen

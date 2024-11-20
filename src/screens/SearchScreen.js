@@ -168,7 +168,8 @@ export default function SearchScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    flex: 1,
+    // justifyContent: "center",
     padding: 35,
     backgroundColor: "#fff",
   },
