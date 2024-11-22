@@ -42,12 +42,19 @@
         }
       ],
       [
+        "expo-asset",
+        {
+          "assets": ["./assets/english.txt"]
+        }
+      ],
+      [
         "expo-notifications",
         {
           "icon": "./assets/logo.png",
           "color": "#ffffff"
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "extra": {
       "eas": {
