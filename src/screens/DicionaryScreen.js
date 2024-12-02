@@ -16,42 +16,38 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function DicionaryScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const navigation = useNavigation();
-  const [learnedWords, setLearnedWords] = useState([]); // Estado de palavras aprendidas
+  const [learnedWords, setLearnedWords] = useState([]);
 
-  // Função para salvar palavra no AsyncStorage
   const saveWord = async (newWord) => {
     try {
       const existingWords = await AsyncStorage.getItem("learnedWords");
       const wordsArray = existingWords ? JSON.parse(existingWords) : [];
 
-      // Se a palavra não existir, adicione
       if (!wordsArray.includes(newWord)) {
         wordsArray.push(newWord);
 
-        // Salva no AsyncStorage
         await AsyncStorage.setItem("learnedWords", JSON.stringify(wordsArray));
 
-        // Atualiza o estado de palavras
         setLearnedWords(wordsArray);
 
-        console.log("Palavra salva:", newWord); // Log para verificação
+        console.log("Palavra salva:", newWord);
       } else {
         console.log("Palavra já salva:", newWord);
       }
     } catch (error) {
-      console.error("Erro ao salvar palavra:", error); // Captura erro de salvamento
+      console.error("Erro ao salvar palavra:", error);
     }
   };
 
   const handleSearch = (term) => {
-    saveWord(term); // Salva a palavra antes de navegar
+    saveWord(term);
     navigation.navigate("SearchScreen", { word: term });
   };
 
   useEffect(() => {
     const loadLearnedWords = async () => {
       const existingWords = await AsyncStorage.getItem("learnedWords");
-      console.log("Carregando palavras:", existingWords); // Log para verificar o retorno
+      console.log("Carregando palavras:", existingWords);
       if (existingWords) {
         const wordsArray = JSON.parse(existingWords);
         console.log("Palavras carregadas:", wordsArray);
@@ -63,8 +59,8 @@ export default function DicionaryScreen() {
 
   const clearLearnedWords = async () => {
     try {
-      await AsyncStorage.removeItem("learnedWords"); // Remove a chave "learnedWords"
-      setLearnedWords([]); // Limpa o estado local
+      await AsyncStorage.removeItem("learnedWords");
+      setLearnedWords([]);
       console.log("Palavras removidas com sucesso!");
     } catch (error) {
       console.error("Erro ao remover palavras:", error);
@@ -96,10 +92,15 @@ export default function DicionaryScreen() {
           inputStyle={styles.input}
           onChangeText={setSearchQuery}
           value={searchQuery}
-          onSubmitEditing={() => handleSearch(searchQuery)} // Passa a palavra ao submeter
+          onSubmitEditing={() => handleSearch(searchQuery)}
         />
       </View>
-      <Text style={styles.title}>All Words</Text>
+      <View style={styles.viewBroom}>
+        <Text style={styles.title}>All Words</Text>
+        <Pressable onPress={clearLearnedWords} style={styles.clearButton}>
+          <MaterialCommunityIcons name="broom" color="#f50f39" size={35} />
+        </Pressable>
+      </View>
       {learnedWords.length === 0 ? (
         <View
           style={{
@@ -120,7 +121,6 @@ export default function DicionaryScreen() {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <Pressable
-              onPress={() => handleSearch(item)}
               style={({ pressed }) => [
                 {
                   padding: 10,
@@ -136,19 +136,11 @@ export default function DicionaryScreen() {
               ]}
             >
               <Text style={styles.wordText}>{item}</Text>
-              <MaterialCommunityIcons
-                name="chevron-right"
-                color="#b1b4b5"
-                size={35}
-              />
             </Pressable>
           )}
           contentContainerStyle={styles.viewAll}
         />
       )}
-      <Pressable onPress={clearLearnedWords} style={styles.clearButton}>
-        <Text style={styles.clearButtonText}>Limpar palavras salvas</Text>
-      </Pressable>
     </View>
   );
 }
@@ -196,5 +188,12 @@ const styles = StyleSheet.create({
   noWord: {
     width: 290,
     height: 290,
+  },
+  viewBroom: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: 9,
   },
 });
