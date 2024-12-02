@@ -6,13 +6,12 @@ export const saveWord = async (newWord) => {
     const existingWords = await AsyncStorage.getItem("learnedWords");
     const wordsArray = existingWords ? JSON.parse(existingWords) : [];
 
-    // Se a palavra não existir, adicione
     if (!wordsArray.includes(newWord)) {
       wordsArray.push(newWord);
       await AsyncStorage.setItem("learnedWords", JSON.stringify(wordsArray));
-      return true; // Indica que a palavra foi salva com sucesso
+      return true;
     } else {
-      return false; // Indica que a palavra já está salva
+      return false;
     }
   } catch (error) {
     console.error("Erro ao salvar palavra:", error);
