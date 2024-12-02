@@ -48,7 +48,7 @@ export default function LearnScreen() {
     const isSaved = await saveWord(wordOfTheDay.word);
     if (isSaved) {
       console.log("Word saved successfully!");
-      setLearnedWords((prevWords) => [...prevWords, wordOfTheDay.word]); // Atualiza o estado local
+      setLearnedWords((prevWords) => [...prevWords, wordOfTheDay.word]);
     } else {
       console.log("Word already saved.");
     }
@@ -129,15 +129,17 @@ export default function LearnScreen() {
         <>
           {/* Título e botões */}
           <View style={styles.viewTitle}>
-            <Text style={styles.wordTitle}>
-              {wordOfTheDay?.word || "Word not found"}
-            </Text>
-            <MaterialCommunityIcons
-              name="book-open-variant"
-              color="#b1b4b5"
-              size={35}
-              style={{ padding: 30 }}
-            />
+            <View style={styles.iconBook}>
+              <Text style={styles.wordTitle}>
+                {wordOfTheDay?.word || "Word not found"}
+              </Text>
+              <MaterialCommunityIcons
+                name="book-open-variant"
+                color="#b1b4b5"
+                size={30}
+              />
+            </View>
+
             <Pressable
               onPress={handleShare}
               style={({ pressed }) => [
@@ -149,30 +151,47 @@ export default function LearnScreen() {
                 name="share-variant"
                 color="#38b6ff"
                 size={35}
-                style={{ padding: 10 }}
               />
             </Pressable>
           </View>
-          <View>
-            {translatedWord && (
-              <Text style={styles.translationText}>
-                Tradução: {translatedWord}
-              </Text>
-            )}
+
+          <View style={styles.viewTransAudio}>
+            <View style={styles.viewTranslate}>
+              {translatedWord && (
+                <Text style={styles.translationText}>
+                  Tradução: {translatedWord}
+                </Text>
+              )}
+            </View>
+
+            <Pressable
+              onPress={playAudio}
+              style={({ pressed }) => [
+                styles.audioButton,
+                pressed && styles.audioButtonPressed,
+              ]}
+            >
+              <MaterialCommunityIcons
+                name="volume-high"
+                size={32}
+                color="#38b6ff"
+              />
+            </Pressable>
+
+            <Pressable
+              onPress={handleSaveWord}
+              style={({ pressed }) => [
+                styles.saveButton,
+                pressed && styles.pressed,
+              ]}
+            >
+              <MaterialCommunityIcons
+                name="bookmark"
+                size={32}
+                color="#bfbdbd"
+              />
+            </Pressable>
           </View>
-          <Pressable
-            onPress={playAudio}
-            style={({ pressed }) => [
-              styles.audioButton,
-              pressed && styles.audioButtonPressed,
-            ]}
-          >
-            <MaterialCommunityIcons
-              name="volume-high"
-              size={32}
-              color="#38b6ff"
-            />
-          </Pressable>
 
           {/* Definições */}
           <View style={styles.definitionsContainer}>
@@ -218,15 +237,6 @@ export default function LearnScreen() {
               {wordOfTheDay?.note || "No additional note available"}
             </Text>
           </View>
-          <Pressable
-            onPress={handleSaveWord}
-            style={({ pressed }) => [
-              styles.saveButton,
-              pressed && styles.pressed,
-            ]}
-          >
-            <MaterialCommunityIcons name="bookmark" size={32} color="#38b6ff" />
-          </Pressable>
         </>
       </ScrollView>
     </View>
@@ -318,29 +328,36 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f4f4f4", // Cor de fundo suave
-    padding: 10,
+    backgroundColor: "#f4f4f4",
+    padding: 8,
   },
   scrollContainer: {
     alignItems: "center",
-    padding: 20,
+    padding: 8,
     width: "100%",
   },
   viewTitle: {
-    alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     width: "100%",
-    paddingTop: 25,
+    paddingTop: 10,
   },
   wordTitle: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#333", // Cor mais suave para o título
+    color: "#333",
+    marginRight: 10,
+  },
+
+  iconBook: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   translationText: {
     fontSize: 18,
-    color: "#38b6ff", // Cor destacada para a tradução
+    color: "#38b6ff",
     marginTop: 5,
     fontWeight: "500",
   },
@@ -371,11 +388,11 @@ const styles = StyleSheet.create({
   },
   definitionsContainer: {
     marginTop: 20,
-    backgroundColor: "#ffffff", // Fundo branco para as definições
+    backgroundColor: "#ffffff",
     borderRadius: 8,
     padding: 15,
     width: "100%",
-    shadowColor: "#000", // Sombra para destacar as seções
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
@@ -405,7 +422,6 @@ const styles = StyleSheet.create({
   saveButton: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
     backgroundColor: "#fff",
     padding: 10,
     borderRadius: 50,
@@ -425,5 +441,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#38b6ff",
     opacity: 0.2,
     borderRadius: 50,
+  },
+  viewTranslate: {
+    backgroundColor: "#e8e8e8",
+    padding: 10,
+    borderRadius: 10,
+    width: "65%",
+  },
+  viewTransAudio: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
   },
 });
