@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginVertical: 10,
-    color: "#444",
+    color: "#38b6ff",
   },
   definitionText: {
     fontSize: 16,
@@ -453,5 +453,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
+    paddingTop: 30,
+    paddingBottom: 20,
   },
 });
