@@ -7,7 +7,6 @@ import {
   Pressable,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { fetchRandomWord } from "../apis/randomWordApi";
 import { Audio } from "expo-av";
 import * as Speech from "expo-speech";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -93,9 +92,9 @@ export default function LearnScreen() {
     const content = `
   📝 **Word:** ${wordOfTheDay?.word}
   
-  🌐 **Translation:** ${translatedWord}
+  🌐 **Translation:** ${translatedWord || "No translation available"}
   
-  📖 **Definition:**
+  📖 **Definitions:**
   ${wordOfTheDay?.meanings
     ?.map((meaning, index) => {
       const definitions = meaning.definitions
@@ -105,8 +104,18 @@ export default function LearnScreen() {
     })
     .join("\n\n")}
   
-  📅 **Origin:** ${wordOfTheDay?.origin || "Date unavailable"}
-  `;
+  ✍️ **Examples:**
+  ${wordOfTheDay?.examples
+    ?.map(
+      (example, index) =>
+        `"${example.text}" - ${example.title || "Unknown source"}`
+    )
+    .join("\n")}
+  
+  📅 **Origin:** ${wordOfTheDay?.origin || "Origin unavailable"}
+  
+  📝 **Note:** ${wordOfTheDay?.note || "No additional note available"}
+    `;
 
     shareContent(content);
   };
@@ -224,83 +233,197 @@ export default function LearnScreen() {
   );
 }
 
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     backgroundColor: "#fff",
+//   },
+//   scrollContainer: {
+//     padding: 16,
+//     alignItems: "center",
+//   },
+//   viewTitle: {
+//     alignItems: "center",
+//     flexDirection: "row",
+//     width: "100%",
+//     paddingTop: 25,
+//   },
+//   wordTitle: {
+//     fontSize: 32,
+//     fontWeight: "bold",
+//   },
+//   infoContainer: {
+//     marginVertical: 10,
+//     width: "100%",
+//     paddingHorizontal: 16,
+//   },
+//   infoLabel: {
+//     fontSize: 18,
+//     fontWeight: "bold",
+//     color: "#333",
+//   },
+//   infoValue: {
+//     fontSize: 16,
+//     color: "#666",
+//   },
+//   definitionsContainer: {
+//     marginTop: 20,
+//     width: "100%",
+//   },
+//   examplesContainer: {
+//     marginTop: 20,
+//     width: "100%",
+//   },
+//   sectionTitle: {
+//     fontSize: 20,
+//     fontWeight: "bold",
+//     marginBottom: 10,
+//   },
+//   definitionText: {
+//     fontSize: 16,
+//     marginVertical: 5,
+//   },
+//   exampleText: {
+//     fontSize: 16,
+//     marginVertical: 5,
+//     fontStyle: "italic",
+//   },
+//   errorText: {
+//     color: "red",
+//     fontSize: 18,
+//   },
+//   shareButton: {
+//     justifyContent: "flex-start",
+//     alignItems: "flex-start",
+//     padding: 0,
+//     margin: 0,
+//     paddingVertical: 0,
+//     paddingHorizontal: 0,
+//   },
+//   pressed: {
+//     backgroundColor: "#38b6ff",
+//     opacity: 0.2,
+//     borderRadius: 50,
+//   },
+//   translationText: {
+//     fontSize: 18,
+//     color: "#38b6ff",
+//     marginTop: 5,
+//   },
+// });
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#f4f4f4", // Cor de fundo suave
+    padding: 10,
   },
   scrollContainer: {
-    padding: 16,
     alignItems: "center",
+    padding: 20,
+    width: "100%",
   },
   viewTitle: {
     alignItems: "center",
     flexDirection: "row",
+    justifyContent: "space-between",
     width: "100%",
     paddingTop: 25,
   },
   wordTitle: {
     fontSize: 32,
     fontWeight: "bold",
+    color: "#333", // Cor mais suave para o título
   },
-  infoContainer: {
-    marginVertical: 10,
-    width: "100%",
-    paddingHorizontal: 16,
-  },
-  infoLabel: {
+  translationText: {
     fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
+    color: "#38b6ff", // Cor destacada para a tradução
+    marginTop: 5,
+    fontWeight: "500",
   },
-  infoValue: {
-    fontSize: 16,
-    color: "#666",
-  },
-  definitionsContainer: {
+  shareButton: {
+    padding: 10,
     marginTop: 20,
-    width: "100%",
-  },
-  examplesContainer: {
-    marginTop: 20,
-    width: "100%",
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginVertical: 10,
+    color: "#444",
   },
   definitionText: {
     fontSize: 16,
     marginVertical: 5,
+    paddingLeft: 15,
+    color: "#555",
+    lineHeight: 22,
   },
   exampleText: {
     fontSize: 16,
     marginVertical: 5,
     fontStyle: "italic",
+    paddingLeft: 15,
+    color: "#666",
+    lineHeight: 22,
+  },
+  definitionsContainer: {
+    marginTop: 20,
+    backgroundColor: "#ffffff", // Fundo branco para as definições
+    borderRadius: 8,
+    padding: 15,
+    width: "100%",
+    shadowColor: "#000", // Sombra para destacar as seções
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
+  examplesContainer: {
+    marginTop: 20,
+    backgroundColor: "#ffffff",
+    borderRadius: 8,
+    padding: 15,
+    width: "100%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
+  noteContainer: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    width: "100%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
+  saveButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 50,
   },
   errorText: {
     color: "red",
     fontSize: 18,
   },
-  shareButton: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    padding: 0,
-    margin: 0,
-    paddingVertical: 0,
-    paddingHorizontal: 0,
+  audioButton: {
+    marginTop: 10,
+    alignItems: "center",
+  },
+  audioButtonPressed: {
+    opacity: 0.7,
   },
   pressed: {
     backgroundColor: "#38b6ff",
     opacity: 0.2,
     borderRadius: 50,
-  },
-  translationText: {
-    fontSize: 18,
-    color: "#38b6ff",
-    marginTop: 5,
   },
 });
