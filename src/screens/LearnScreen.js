@@ -12,7 +12,7 @@ import { Audio } from "expo-av";
 import * as Speech from "expo-speech";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { fetchWordDefinition } from "../apis/dictionaryApi";
+import { fetchWordOfTheDay } from "../apis/wordOfTheDayApi";
 import { saveWord } from "../utils/wordStorage";
 import { translateWord } from "../utils/translate";
 import { shareContent } from "../utils/shareUtils";
@@ -21,45 +21,42 @@ export default function LearnScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sound, setSound] = useState(null);
-  const [definition, setDefinition] = useState(null);
+  const [wordOfTheDay, setWordOfTheDay] = useState(null);
   const [translatedWord, setTranslatedWord] = useState(null);
+  const [learnedWords, setLearnedWords] = useState([]);
 
-  const fetchRandomWordHandler = async () => {
-    setLoading(true);
-    setError(null);
-
+  const fetchWordOfTheDayHandler = async () => {
     try {
-      const randomWord = await fetchRandomWord();
-      if (!randomWord) {
-        setError("Erro ao buscar uma palavra aleatória.");
-        setLoading(false);
-        return;
-      }
-
-      const wordDefinition = await fetchWordDefinition(randomWord);
-
-      if (wordDefinition?.error) {
-        setError(wordDefinition.error);
-        setLoading(false);
-        return;
-      }
-
-      setDefinition(wordDefinition[0]);
-
-      saveWord(wordDefinition[0].word);
-
-      // Chama a função de tradução
-      const translated = await translateWord(wordDefinition[0].word);
-      setTranslatedWord(translated);
-    } catch (error) {
-      setError("Erro ao buscar a definição da palavra.");
+      setLoading(true);
+      const data = await fetchWordOfTheDay();
+      console.log("API Response:", data);
+      setWordOfTheDay(data);
+      const translation = await translateWord(data.word);
+      setTranslatedWord(translation);
+    } catch (err) {
+      setError("Failed to fetch word of the day.");
     } finally {
       setLoading(false);
     }
   };
 
+  const handleSaveWord = async () => {
+    if (!wordOfTheDay?.word) {
+      console.error("No word to save.");
+      return;
+    }
+
+    const isSaved = await saveWord(wordOfTheDay.word);
+    if (isSaved) {
+      console.log("Word saved successfully!");
+      setLearnedWords((prevWords) => [...prevWords, wordOfTheDay.word]); // Atualiza o estado local
+    } else {
+      console.log("Word already saved.");
+    }
+  };
+
   useEffect(() => {
-    fetchRandomWordHandler();
+    fetchWordOfTheDayHandler();
 
     return () => {
       if (sound) sound.unloadAsync();
@@ -67,7 +64,7 @@ export default function LearnScreen() {
   }, []);
 
   const playAudio = async () => {
-    const audioUrl = definition?.phonetics?.find((p) => p.audio)?.audio;
+    const audioUrl = wordOfTheDay?.phonetics?.find((p) => p.audio)?.audio;
 
     if (audioUrl) {
       try {
@@ -81,12 +78,12 @@ export default function LearnScreen() {
         setSound(newSound);
         await newSound.playAsync();
       } catch (error) {
-        Speech.speak(definition?.word || "Word not available", {
+        Speech.speak(wordOfTheDay?.word || "Word not available", {
           language: "en",
         });
       }
     } else {
-      Speech.speak(definition?.word || "Word not available", {
+      Speech.speak(wordOfTheDay?.word || "Word not available", {
         language: "en",
       });
     }
@@ -94,12 +91,12 @@ export default function LearnScreen() {
 
   const handleShare = () => {
     const content = `
-  📝 **Word:** ${definition?.word}
+  📝 **Word:** ${wordOfTheDay?.word}
   
   🌐 **Translation:** ${translatedWord}
   
   📖 **Definition:**
-  ${definition?.meanings
+  ${wordOfTheDay?.meanings
     ?.map((meaning, index) => {
       const definitions = meaning.definitions
         .map((def) => `- ${def.definition}`)
@@ -108,10 +105,10 @@ export default function LearnScreen() {
     })
     .join("\n\n")}
   
-  📅 **Origin:** ${definition?.origin || "Date unavailable"}
+  📅 **Origin:** ${wordOfTheDay?.origin || "Date unavailable"}
   `;
 
-    shareContent(content); // Chama a função para compartilhar
+    shareContent(content);
   };
 
   if (loading) return <ActivityIndicator size="large" color="#38b6ff" />;
@@ -121,9 +118,10 @@ export default function LearnScreen() {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <>
+          {/* Título e botões */}
           <View style={styles.viewTitle}>
             <Text style={styles.wordTitle}>
-              {definition.word || "Word not found"}
+              {wordOfTheDay?.word || "Word not found"}
             </Text>
             <MaterialCommunityIcons
               name="book-open-variant"
@@ -146,40 +144,80 @@ export default function LearnScreen() {
               />
             </Pressable>
           </View>
-          <View style={styles.translate}>
+          <View>
             {translatedWord && (
-              <View style={styles.translationContainer}>
-                <Text style={styles.translationText}>
-                  Tradução: {translatedWord}
-                </Text>
-              </View>
+              <Text style={styles.translationText}>
+                Tradução: {translatedWord}
+              </Text>
             )}
           </View>
-          <View style={styles.viewPhonetic}>
-            <Text style={styles.phonetic}>{definition.phonetic || " "}</Text>
-            <Pressable onPress={playAudio}>
-              <MaterialCommunityIcons
-                name="volume-high"
-                color="#38b6ff"
-                size={30}
-                style={{ padding: 5 }}
-              />
-            </Pressable>
-          </View>
+          <Pressable
+            onPress={playAudio}
+            style={({ pressed }) => [
+              styles.audioButton,
+              pressed && styles.audioButtonPressed,
+            ]}
+          >
+            <MaterialCommunityIcons
+              name="volume-high"
+              size={32}
+              color="#38b6ff"
+            />
+          </Pressable>
+
+          {/* Definições */}
           <View style={styles.definitionsContainer}>
-            {definition.meanings.map((meaning, index) => (
-              <View key={index} style={styles.meaningBlock}>
-                <Text style={styles.partOfSpeech}>
-                  {meaning.partOfSpeech || "Unknown part of speech"}
-                </Text>
-                {meaning.definitions.map((def, defIndex) => (
-                  <Text key={defIndex} style={styles.definitionText}>
-                    - {def.definition}
+            <Text style={styles.sectionTitle}>Definitions:</Text>
+            {wordOfTheDay?.definitions?.length > 0 ? (
+              wordOfTheDay.definitions.map((def, index) => (
+                <View key={index} style={styles.meaningBlock}>
+                  <Text style={styles.partOfSpeech}>
+                    {def.partOfSpeech || "Unknown part of speech"}
                   </Text>
-                ))}
-              </View>
-            ))}
+                  <Text style={styles.definitionText}>
+                    - {def.text || "No definition available"}
+                  </Text>
+                </View>
+              ))
+            ) : (
+              <Text style={styles.definitionText}>
+                No definitions available
+              </Text>
+            )}
           </View>
+
+          {/* Exemplos */}
+          <View style={styles.examplesContainer}>
+            <Text style={styles.sectionTitle}>Examples:</Text>
+            {wordOfTheDay?.examples?.length > 0 ? (
+              wordOfTheDay.examples.map((example, index) => (
+                <View key={index} style={styles.exampleBlock}>
+                  <Text style={styles.exampleText}>
+                    "{example.text}" - {example.title || "Unknown source"}
+                  </Text>
+                </View>
+              ))
+            ) : (
+              <Text style={styles.exampleText}>No examples available</Text>
+            )}
+          </View>
+
+          {/* Nota */}
+          <View style={styles.noteContainer}>
+            <Text style={styles.sectionTitle}>Note:</Text>
+            <Text style={styles.noteText}>
+              {wordOfTheDay?.note || "No additional note available"}
+            </Text>
+          </View>
+          <Pressable
+            onPress={handleSaveWord}
+            style={({ pressed }) => [
+              styles.saveButton,
+              pressed && styles.pressed,
+            ]}
+          >
+            <MaterialCommunityIcons name="bookmark" size={32} color="#38b6ff" />
+          </Pressable>
         </>
       </ScrollView>
     </View>
@@ -207,50 +245,45 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
   },
-  viewPhonetic: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "100%",
-  },
-  phonetic: {
-    fontSize: 20,
+  infoContainer: {
     marginVertical: 10,
+    width: "100%",
+    paddingHorizontal: 16,
   },
-  errorText: {
-    color: "red",
+  infoLabel: {
     fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  infoValue: {
+    fontSize: 16,
+    color: "#666",
   },
   definitionsContainer: {
     marginTop: 20,
     width: "100%",
   },
-  meaningBlock: {
-    marginBottom: 20,
+  examplesContainer: {
+    marginTop: 20,
+    width: "100%",
   },
-  partOfSpeech: {
-    fontSize: 18,
+  sectionTitle: {
+    fontSize: 20,
     fontWeight: "bold",
+    marginBottom: 10,
   },
   definitionText: {
     fontSize: 16,
     marginVertical: 5,
   },
-  translationContainer: {
-    marginTop: 20,
-    padding: 15,
-    backgroundColor: "#f0f0f0",
-    borderRadius: 5,
-    width: "100%",
+  exampleText: {
+    fontSize: 16,
+    marginVertical: 5,
+    fontStyle: "italic",
   },
-  translationText: {
+  errorText: {
+    color: "red",
     fontSize: 18,
-    fontWeight: "bold",
-    color: "#38b6ff",
-  },
-  translate: {
-    justifyContent: "flex-start",
-    width: "100%",
-    alignItems: "flex-start",
   },
   shareButton: {
     justifyContent: "flex-start",
@@ -264,5 +297,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#38b6ff",
     opacity: 0.2,
     borderRadius: 50,
+  },
+  translationText: {
+    fontSize: 18,
+    color: "#38b6ff",
+    marginTop: 5,
   },
 });
