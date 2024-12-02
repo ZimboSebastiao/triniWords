@@ -57,8 +57,8 @@ export default function SearchScreen({ route }) {
     };
 
     const getTranslation = async () => {
-      const translated = await translateWord(word); // Chamando a função de tradução
-      setTranslation(translated); // Armazenando a tradução
+      const translated = await translateWord(word);
+      setTranslation(translated);
     };
 
     getDefinition();
@@ -133,19 +133,20 @@ export default function SearchScreen({ route }) {
     );
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       {definition && (
         <>
           <View style={styles.viewTitle}>
-            <Text style={styles.wordTitle}>
-              {definition.word || "Palavra não encontrada"}
-            </Text>
-            <MaterialCommunityIcons
-              name="book-open-variant"
-              color="#b1b4b5"
-              size={35}
-              style={{ padding: 30 }}
-            />
+            <View style={styles.iconBook}>
+              <Text style={styles.wordTitle}>
+                {definition.word || "Palavra não encontrada"}
+              </Text>
+              <MaterialCommunityIcons
+                name="book-open-variant"
+                color="#b1b4b5"
+                size={35}
+              />
+            </View>
             <Pressable
               onPress={handleShare}
               style={({ pressed }) => [
@@ -206,13 +207,28 @@ export default function SearchScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#fff",
-    padding: 25,
+    padding: 8,
+  },
+  scrollContainer: {
+    backgroundColor: "#fff",
+    // alignItems: "center",
+    padding: 20,
+    width: "100%",
   },
   wordTitle: {
-    fontSize: 44,
+    fontSize: 32,
     fontWeight: "bold",
-    color: "#30333C",
+    color: "#333",
+    marginRight: 10,
+  },
+
+  iconBook: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   phonetic: {
     fontSize: 18,
@@ -250,7 +266,10 @@ const styles = StyleSheet.create({
   },
   viewTitle: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    width: "100%",
+    paddingTop: 10,
   },
   viewPhonetic: {
     flexDirection: "row",

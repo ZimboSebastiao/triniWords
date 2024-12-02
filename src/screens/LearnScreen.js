@@ -188,7 +188,7 @@ export default function LearnScreen() {
               <MaterialCommunityIcons
                 name="bookmark"
                 size={32}
-                color="#bfbdbd"
+                color="#b1b4b5"
               />
             </Pressable>
           </View>
