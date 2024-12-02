@@ -6,6 +6,7 @@ import { SearchHistoryProvider } from "./src/context/SearchHistoryContext";
 import { navigationRef } from "./src/utils/RootNavigation";
 import Splash from "./src/screens/Splash";
 import { scheduleDailyNotification } from "./src/utils/notifications";
+import * as Notifications from "expo-notifications";
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -18,8 +19,16 @@ export default function App() {
     return () => clearTimeout(splashTimer);
   }, []);
 
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
+  });
+
   useEffect(() => {
-    scheduleDailyNotification(); // Agende a notificação ao iniciar o app
+    scheduleDailyNotification();
   }, []);
 
   if (showSplash) {
