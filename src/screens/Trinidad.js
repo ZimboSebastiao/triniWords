@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   Pressable,
+  Linking,
 } from "react-native";
 import { Modal, Portal, Button, PaperProvider } from "react-native-paper";
 
@@ -20,6 +21,13 @@ export default function Trinidad() {
     margin: 20,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10,
+  };
+
+  const handlePress = (url) => {
+    Linking.openURL(url).catch((err) =>
+      console.error("Erro ao abrir o link:", err)
+    );
   };
 
   return (
@@ -69,18 +77,61 @@ export default function Trinidad() {
               onDismiss={hideModal}
               contentContainerStyle={containerStyle}
             >
-              <View style={styles.socialMidia}>
-                <Text style={styles.subtitleText}>Linkedin</Text>
-              </View>
-              <View style={styles.socialMidia}>
-                <Text style={styles.subtitleText}>instagram</Text>
-              </View>
-              <View style={styles.socialMidia}>
-                <Text style={styles.subtitleText}>Medium</Text>
-              </View>
-              <View style={styles.socialMidia}>
-                <Text style={styles.subtitleText}>Portfolio</Text>
-              </View>
+              <Pressable
+                style={styles.socialMidia}
+                onPress={() =>
+                  handlePress("https://linkedin.com/in/janiracampotrinidad")
+                }
+              >
+                <Image
+                  style={styles.social}
+                  source={require("../../assets/images/linkedin.png")}
+                />
+                <Text style={styles.subtitleFollow}>Linkedin</Text>
+              </Pressable>
+
+              <Pressable
+                style={styles.socialMidia}
+                onPress={() =>
+                  handlePress(
+                    "https://www.instagram.com/janira.linguaecultura/"
+                  )
+                }
+              >
+                <Image
+                  style={styles.social}
+                  source={require("../../assets/images/instagram.png")}
+                />
+                <Text style={styles.subtitleFollow}>instagram</Text>
+              </Pressable>
+
+              <Pressable
+                style={styles.socialMidia}
+                onPress={() =>
+                  handlePress("https://medium.com/@janira.ctrinidad")
+                }
+              >
+                <Image
+                  style={styles.social}
+                  source={require("../../assets/images/m.png")}
+                />
+                <Text style={styles.subtitleFollow}>Medium</Text>
+              </Pressable>
+
+              <Pressable
+                style={styles.socialMidia}
+                onPress={() =>
+                  handlePress(
+                    "https://docs.google.com/presentation/d/1ZvdWNTiEEgQNZfIAt4W7pBjqkeuUWT50TCSh4t7_-ic/edit#slide=id.p"
+                  )
+                }
+              >
+                <Image
+                  style={styles.social}
+                  source={require("../../assets/images/t.png")}
+                />
+                <Text style={styles.subtitleFollow}>Portfolio</Text>
+              </Pressable>
             </Modal>
           </Portal>
         </ScrollView>
@@ -209,6 +260,20 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     marginBottom: 12,
-    width: "50%",
+    width: "70%",
+    flexDirection: "row",
+    // justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  social: {
+    width: 30,
+    height: 30,
+  },
+  subtitleFollow: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#333",
+    paddingLeft: 20,
   },
 });
