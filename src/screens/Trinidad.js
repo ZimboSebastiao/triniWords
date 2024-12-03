@@ -1,54 +1,74 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-import { Modal, Portal, Text, Button, PaperProvider } from "react-native-paper";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Pressable,
+} from "react-native";
+import { Modal, Portal, Button, PaperProvider } from "react-native-paper";
 
 export default function Trinidad() {
-  return (
-    <View style={styles.container}>
-      <View style={styles.viewTrinidad}>
-        <Image
-          style={styles.trinidade}
-          source={require("../../assets/images/download.jpg")}
-        />
-      </View>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>Janira Campos Trinidad</Text>
-          <Text style={styles.subtitle}>About:</Text>
-          <Text style={styles.sub}>Teacher of Languages</Text>
-        </View>
-        <View style={styles.viewLangagues}>
-          <View style={styles.textLangague}>
-            <Image
-              style={styles.langagues}
-              source={require("../../assets/images/idiomas.png")}
-            />
-            <Text style={styles.sentence}>
-              Which language will you master next?
-            </Text>
-          </View>
+  const [visible, setVisible] = React.useState(false);
 
-          <View style={styles.english}>
-            <Text style={styles.subtitleText}>English</Text>
-          </View>
-          <View style={styles.spanish}>
-            <Text style={styles.subtitleText}>Spanish</Text>
-          </View>
-          <View style={styles.portuguese}>
-            <Text style={styles.subtitleText}>Portuguese</Text>
-          </View>
-          <View style={styles.english}>
-            <Text style={styles.subtitleText}>English</Text>
-          </View>
-          <View style={styles.spanish}>
-            <Text style={styles.subtitleText}>Spanish</Text>
-          </View>
-          <View style={styles.portuguese}>
-            <Text style={styles.subtitleText}>Portuguese</Text>
-          </View>
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = { backgroundColor: "white", padding: 20, margin: 20 };
+
+  return (
+    <PaperProvider>
+      <View style={styles.container}>
+        <View style={styles.viewTrinidad}>
+          <Image
+            style={styles.trinidade}
+            source={require("../../assets/images/download.jpg")}
+          />
         </View>
-      </ScrollView>
-    </View>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>Janira Campos Trinidad</Text>
+            <Text style={styles.subtitle}>About:</Text>
+            <View style={styles.viewFollow}>
+              <Text style={styles.sub}>Teacher of Languages</Text>
+              <Pressable style={styles.followBotao} onPress={showModal}>
+                <Text style={styles.followText}>Follow</Text>
+              </Pressable>
+            </View>
+          </View>
+          <View style={styles.viewLangagues}>
+            <View style={styles.textLangague}>
+              <Image
+                style={styles.langagues}
+                source={require("../../assets/images/idiomas.png")}
+              />
+              <Text style={styles.sentence}>
+                Which language will you master next?
+              </Text>
+            </View>
+
+            <View style={styles.english}>
+              <Text style={styles.subtitleText}>English</Text>
+            </View>
+            <View style={styles.spanish}>
+              <Text style={styles.subtitleText}>Spanish</Text>
+            </View>
+            <View style={styles.portuguese}>
+              <Text style={styles.subtitleText}>Portuguese</Text>
+            </View>
+          </View>
+          <Portal>
+            <Modal
+              visible={visible}
+              onDismiss={hideModal}
+              contentContainerStyle={containerStyle}
+            >
+              <Text>Example Modal. Click outside this area to dismiss.</Text>
+            </Modal>
+          </Portal>
+        </ScrollView>
+      </View>
+    </PaperProvider>
   );
 }
 
@@ -147,6 +167,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#333", // Texto escuro para contraste
+    color: "#333",
+  },
+  viewFollow: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  followText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "white",
+  },
+  followBotao: {
+    backgroundColor: "#38b6ff",
+    padding: 3,
+    width: "28%",
+    borderRadius: 10,
   },
 });
