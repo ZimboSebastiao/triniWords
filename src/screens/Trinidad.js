@@ -14,7 +14,13 @@ export default function Trinidad() {
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const containerStyle = { backgroundColor: "white", padding: 20, margin: 20 };
+  const containerStyle = {
+    backgroundColor: "white",
+    padding: 20,
+    margin: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  };
 
   return (
     <PaperProvider>
@@ -63,7 +69,18 @@ export default function Trinidad() {
               onDismiss={hideModal}
               contentContainerStyle={containerStyle}
             >
-              <Text>Example Modal. Click outside this area to dismiss.</Text>
+              <View style={styles.socialMidia}>
+                <Text style={styles.subtitleText}>Linkedin</Text>
+              </View>
+              <View style={styles.socialMidia}>
+                <Text style={styles.subtitleText}>instagram</Text>
+              </View>
+              <View style={styles.socialMidia}>
+                <Text style={styles.subtitleText}>Medium</Text>
+              </View>
+              <View style={styles.socialMidia}>
+                <Text style={styles.subtitleText}>Portfolio</Text>
+              </View>
             </Modal>
           </Portal>
         </ScrollView>
@@ -186,5 +203,12 @@ const styles = StyleSheet.create({
     padding: 3,
     width: "28%",
     borderRadius: 10,
+  },
+  socialMidia: {
+    backgroundColor: "#ADD8E6",
+    padding: 8,
+    borderRadius: 8,
+    marginBottom: 12,
+    width: "50%",
   },
 });
