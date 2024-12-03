@@ -10,6 +10,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import LearnScreen from "../screens/LearnScreen";
 import PracticeScreen from "../screens/PracticeScreen";
 import * as Notifications from "expo-notifications";
+import Trinidad from "../screens/Trinidad";
 
 const Tab = createBottomTabNavigator();
 
@@ -91,6 +92,19 @@ export default function TabNavigator() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="history" color={color} size={35} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Trinidad"
+        component={Trinidad}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="information-outline"
+              color={color}
+              size={35}
+            />
           ),
         }}
       />
